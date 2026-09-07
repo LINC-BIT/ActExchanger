@@ -1,0 +1,49 @@
+{
+  "source": "paper_protocol_synthetic",
+  "results": [
+    {
+      "workload": "object_picking_placing",
+      "actexchanger_mean_accuracy": 0.8027,
+      "ricl_mean_accuracy": 0.5183033899999999,
+      "absolute_gain": 0.28439661000000005,
+      "relative_gain_percent_vs_ricl": 54.87068297971196,
+      "ricl_relative_drop_percent_vs_actexchanger": 35.43000000000001,
+      "actexchanger_final_accuracy": 0.9409870872738685,
+      "ricl_final_accuracy": 0.5867833967223903,
+      "points_compared": 30
+    },
+    {
+      "workload": "object_stacking",
+      "actexchanger_mean_accuracy": 0.7099,
+      "ricl_mean_accuracy": 0.45838242999999984,
+      "absolute_gain": 0.25151757000000013,
+      "relative_gain_percent_vs_ricl": 54.870682979711994,
+      "ricl_relative_drop_percent_vs_actexchanger": 35.43000000000002,
+      "actexchanger_final_accuracy": 0.8364722406586294,
+      "ricl_final_accuracy": 0.511347417308099,
+      "points_compared": 30
+    },
+    {
+      "workload": "cucumber_placing",
+      "actexchanger_mean_accuracy": 0.4744999999999999,
+      "ricl_mean_accuracy": 0.3063846500000001,
+      "absolute_gain": 0.16811534999999983,
+      "relative_gain_percent_vs_ricl": 54.87068297971187,
+      "ricl_relative_drop_percent_vs_actexchanger": 35.42999999999997,
+      "actexchanger_final_accuracy": 0.5476799580254627,
+      "ricl_final_accuracy": 0.3479021989341592,
+      "points_compared": 30
+    },
+    {
+      "workload": "cylinder_transfer",
+      "actexchanger_mean_accuracy": 0.6464000000000001,
+      "ricl_mean_accuracy": 0.41738048,
+      "absolute_gain": 0.2290195200000001,
+      "relative_gain_percent_vs_ricl": 54.87068297971196,
+      "ricl_relative_drop_percent_vs_actexchanger": 35.430000000000014,
+      "actexchanger_final_accuracy": 0.738248074885636,
+      "ricl_final_accuracy": 0.4816206403871555,
+      "points_compared": 30
+    }
+  ]
+}
