@@ -296,17 +296,8 @@
 
 #### 1.2.5 About Dataset<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
 
-- **Dataset for pre-training**: 
 
-  We use the demonstration dataset in the ManiSkill Benchmark for pre-training VLA models. It is stored in [Hugging Face](https://huggingface.co/datasets/haosulab/ManiSkill_PickCube). You can download it by the following command:
-  ```bash
-  python -m mani_skill.utils.download_demo PushCube-v1
-  ``` 
-  Note that we do not anonymize or discard the raw dataset. 
-
-- **Dataset for online RL training**:
-
-  We do not use any dataset for online RL training. The data for online RL training is sampled from the ManiSkill Benchmark's environments.
+  We do not use any dataset for training. The data for training is sampled from the ManiSkill Benchmark's environments.
 
 ### 1.3 Treatment Measure for Unusual Behaviors
 
