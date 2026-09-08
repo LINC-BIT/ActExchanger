@@ -570,20 +570,12 @@ You can add a new CNN-based MARL baseline according to the following steps.
     ```python
     training_loop = HAPPOTrainingLoop()
     results = training_loop.run(
-        workload="object_stacking",
-        config=config,
-    )
-    ```
-
-  - **Step 3:** Connect the four interfaces in the training loop.
-
-    ```python
-    rollout = training_loop.collect_rollout(
-        envs,
         agent_model,
         planner=planner,
         communication=communication,
         config=config,
+        workload="object_stacking",
+        env_list=ENV_LIST,
     )
     ```
 
@@ -726,20 +718,12 @@ You can add a new LLM-based MARL baseline according to the following steps.
     ```python
     training_loop = ROCOTrainingLoop()
     results = training_loop.run(
-        workload="object_stacking",
-        config=config,
-    )
-    ```
-
-  - **Step 3:** Connect the ROCO interfaces in the training loop.
-
-    ```python
-    rollout = training_loop.collect_rollout(
-        envs,
         agent_model,
         planner=planner,
         communication=communication,
         config=config,
+        workload="object_stacking",
+        env_list=ENV_LIST,
     )
     ```
 
@@ -848,18 +832,10 @@ You can add a new VLA-based MARL baseline according to the following steps.
     ```python
     training_loop = MAPLETrainingLoop()
     results = training_loop.run(
-        workload="object_stacking",
-        config=config,
-    )
-    ```
-
-  - **Step 3:** Connect the MAPLE interfaces in the training loop.
-
-    ```python
-    rollout = training_loop.collect_rollout(
-        envs,
         agent_model,
         communication=communication,
         config=config,
+        workload="object_stacking",
+        env_list=ENV_LIST,
     )
     ```
