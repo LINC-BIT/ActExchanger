@@ -427,8 +427,7 @@ Then, run the following commands to reproduce each figure/table in our evaluatio
 ## 3. Addition of Three Types of MARL Methods
 
 ### 3.1 CNN-based MARL Example: HAPPO<img src="./heading-divider.svg" alt="" width="100%" height="1">
-
-ActExchanger can be integrated with a CNN-based MARL method through four interfaces: the agent model, the planner model, the communication module, and the training loop. The HAPPO scaffold is provided in [`api/marl_method_interface_examples/happo_impl.py`](./api/marl_method_interface_examples/happo_impl.py), while the reusable contracts are defined in [`api/marl_method_interface.py`](./api/marl_method_interface.py).
+You can add a new CNN-based MARL baseline according to the following steps.
 
 #### 3.1.1 Agent Model Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
 
@@ -590,33 +589,277 @@ ActExchanger can be integrated with a CNN-based MARL method through four interfa
 
 ### 3.2 LLM-based MARL Example: ROCO<img src="./heading-divider.svg" alt="" width="100%" height="1">
 
+You can add a new LLM-based MARL baseline according to the following steps.
 
 #### 3.2.1 Agent Model Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
 
+- **Detailed integration steps**:
 
+  - **Step 1:** Create a new file and define `ROCOAgentModel`, inherited from `AgentModelInterface`.
+
+    ```python
+    from api.marl_method_interface import AgentModelInterface
+
+    class ROCOAgentModel(AgentModelInterface):
+        ...
+    ```
+
+  - **Step 2:** Define the participating agents and their observation, language-context, and action dimensions for the selected workload.
+
+    ```python
+    model_impl = ROCOAgentModel(
+        agent_names=("agent_0", "agent_1"),
+        state_dims={"agent_0": 32, "agent_1": 32},
+        action_dims={"agent_0": 7, "agent_1": 7},
+    )
+    ```
+
+  - **Step 3:** Implement the LLM policy construction, conversion from observations and task context to a policy batch, action sampling, value estimation, and optimizer construction.
+
+    ```python
+    def build_model(self, *, device, config):
+        # Return the ROCO language-conditioned actor-critic model.
+        ...
+
+    def build_batch_from_obs(self, obs, *, device):
+        # Convert observations and task context to the model batch schema.
+        ...
+
+    def get_action_and_value(self, model, batch, *, actions_input=None, deterministic=False):
+        # Return per-agent actions, log probabilities, entropies, and values.
+        ...
+    ```
+
+  - **Step 4:** Initialize the agent model interface and construct the model.
+
+    ```python
+    agent_model_impl = ROCOAgentModel(
+        agent_names=agent_names,
+        state_dims=state_dims,
+        action_dims=action_dims,
+    )
+    agent_model = agent_model_impl.build_model(device=device, config=config)
+    ```
 
 #### 3.2.2 Planner Model Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
 
+- **Detailed integration steps**:
 
+  - **Step 1:** Create a planner adapter inherited from `PlannerModelInterface`.
+
+    ```python
+    from api.marl_method_interface import PlannerModelInterface
+
+    class ROCOPlannerModel(PlannerModelInterface):
+        ...
+    ```
+
+  - **Step 2:** Implement planner construction, generation of task-level decisions, planner action/value inference, optimizer construction, and planner updates.
+
+    ```python
+    planner_impl = ROCOPlannerModel()
+    planner = planner_impl.build_planner(
+        agent_model=agent_model,
+        device=device,
+        config=config,
+    )
+    ```
+
+  - **Step 3:** Use the planner decisions to condition each LLM agent before it selects low-level actions.
+
+    ```python
+    planner_output = planner_impl.plan(
+        planner,
+        batch,
+        deterministic=False,
+    )
+    ```
 
 #### 3.2.3 Communication Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
 
+- **Detailed integration steps**:
 
+  - **Step 1:** Create a communication adapter inherited from `CommunicationInterface`.
+
+    ```python
+    from api.marl_method_interface import CommunicationInterface
+
+    class ROCOCommunication(CommunicationInterface):
+        ...
+    ```
+
+  - **Step 2:** Implement ROCO's message encoding, message decoding, and multi-agent message aggregation.
+
+    ```python
+    communication = ROCOCommunication()
+    message = communication.encode_message(
+        sender="agent_0",
+        receiver="agent_1",
+        feature=local_feature,
+    )
+    received_feature = communication.decode_message(
+        message,
+        receiver="agent_1",
+        device=device,
+    )
+    fused_feature = communication.aggregate(
+        local_feature,
+        [received_feature],
+    )
+    ```
 
 #### 3.2.4 Training Loop Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
 
+- **Detailed integration steps**:
 
+  - **Step 1:** Create a training-loop adapter inherited from `TrainingLoopInterface`.
+
+    ```python
+    from api.marl_method_interface import TrainingLoopInterface
+
+    class ROCOTrainingLoop(TrainingLoopInterface):
+        ...
+    ```
+
+  - **Step 2:** Implement environment construction, rollout collection, policy updates, evaluation, checkpointing, and the top-level run method.
+
+    ```python
+    training_loop = ROCOTrainingLoop()
+    results = training_loop.run(
+        workload="object_stacking",
+        config=config,
+    )
+    ```
+
+  - **Step 3:** Connect the ROCO interfaces in the training loop.
+
+    ```python
+    rollout = training_loop.collect_rollout(
+        envs,
+        agent_model,
+        planner=planner,
+        communication=communication,
+        config=config,
+    )
+    ```
 
 ### 3.3 VLA-based MARL Example: MAPLE<img src="./heading-divider.svg" alt="" width="100%" height="1">
 
-
+You can add a new VLA-based MARL baseline according to the following steps.
 
 #### 3.3.1 Agent Model Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
 
+- **Detailed integration steps**:
 
+  - **Step 1:** Create a new file and define `MAPLEAgentModel`, inherited from `AgentModelInterface`.
+
+    ```python
+    from api.marl_method_interface import AgentModelInterface
+
+    class MAPLEAgentModel(AgentModelInterface):
+        ...
+    ```
+
+  - **Step 2:** Define the VLA agent names and their state/action dimensions for the selected workload.
+
+    ```python
+    model_impl = MAPLEAgentModel(
+        agent_names=("agent_0", "agent_1"),
+        state_dims={"agent_0": 32, "agent_1": 32},
+        action_dims={"agent_0": 7, "agent_1": 7},
+    )
+    ```
+
+  - **Step 3:** Implement VLA model construction, conversion from visual-language observations to a policy batch, action sampling, value estimation, and optimizer construction.
+
+    ```python
+    def build_model(self, *, device, config):
+        # Return the MAPLE VLA actor-critic model.
+        ...
+
+    def build_batch_from_obs(self, obs, *, device):
+        # Convert visual observations, task text, and states to the policy batch schema.
+        ...
+
+    def get_action_and_value(self, model, batch, *, actions_input=None, deterministic=False):
+        # Return per-agent actions, log probabilities, entropies, and values.
+        ...
+    ```
+
+  - **Step 4:** Initialize the agent model interface and construct the VLA policy.
+
+    ```python
+    agent_model_impl = MAPLEAgentModel(
+        agent_names=agent_names,
+        state_dims=state_dims,
+        action_dims=action_dims,
+    )
+    agent_model = agent_model_impl.build_model(device=device, config=config)
+    ```
 
 #### 3.3.2 Communication Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
 
+- **Detailed integration steps**:
 
+  - **Step 1:** Create a communication adapter inherited from `CommunicationInterface`.
+
+    ```python
+    from api.marl_method_interface import CommunicationInterface
+
+    class MAPLECommunication(CommunicationInterface):
+        ...
+    ```
+
+  - **Step 2:** Implement MAPLE's message encoding, message decoding, and multi-agent message aggregation.
+
+    ```python
+    communication = MAPLECommunication()
+    message = communication.encode_message(
+        sender="agent_0",
+        receiver="agent_1",
+        feature=local_feature,
+    )
+    received_feature = communication.decode_message(
+        message,
+        receiver="agent_1",
+        device=device,
+    )
+    fused_feature = communication.aggregate(
+        local_feature,
+        [received_feature],
+    )
+    ```
 
 #### 3.3.3 Training Loop Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
+
+- **Detailed integration steps**:
+
+  - **Step 1:** Create a training-loop adapter inherited from `TrainingLoopInterface`.
+
+    ```python
+    from api.marl_method_interface import TrainingLoopInterface
+
+    class MAPLETrainingLoop(TrainingLoopInterface):
+        ...
+    ```
+
+  - **Step 2:** Implement environment construction, rollout collection, MAPLE updates, evaluation, checkpointing, and the top-level run method.
+
+    ```python
+    training_loop = MAPLETrainingLoop()
+    results = training_loop.run(
+        workload="object_stacking",
+        config=config,
+    )
+    ```
+
+  - **Step 3:** Connect the MAPLE interfaces in the training loop.
+
+    ```python
+    rollout = training_loop.collect_rollout(
+        envs,
+        agent_model,
+        communication=communication,
+        config=config,
+    )
+    ```
