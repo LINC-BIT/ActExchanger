@@ -517,8 +517,6 @@ cd <ActExchanger directory in the container>/eval
         return self._backend().build_optimizer(SimpleNamespace(**config), policy)
     ```
 
-  Complete implementation: [`vla_adapter_smolvla_impl.py`](./api/vla_model_interface_examples/vla_adapter_smolvla_impl.py).
-
   - **Step 4:** Instantiate the adapter with the selected workload backend.
 
     ```python
@@ -636,7 +634,6 @@ cd <ActExchanger directory in the container>/eval
             return self._impl.transmission_size(message)
     ```
 
-  Complete implementation: [`happo_impl.py`](./api/marl_method_interface_examples/happo_impl.py).
 
   - **Step 2:** Use the communication adapter during agent interaction.
 
@@ -825,7 +822,6 @@ cd <ActExchanger directory in the container>/eval
             return tensor_bytes + text_bytes
     ```
 
-  Complete implementation: [`roco_impl.py`](./api/marl_method_interface_examples/roco_impl.py).
 
   - **Step 2:** Use the communication adapter to exchange ROCO planning information.
 
@@ -933,7 +929,6 @@ cd <ActExchanger directory in the container>/eval
             return self._impl.transmission_size(message)
     ```
 
-  Complete implementation: [`maple_impl.py`](./api/marl_method_interface_examples/maple_impl.py).
 
   - **Step 2:** Use the communication adapter to exchange MAPLE latent features.
 
