@@ -1,5 +1,0 @@
-workload,label,max_supported_model_gb,largest_platform_model_gb,knowledge_mb,module_overhead_mb,source
-object_picking_placing,Object picking and placing,11.3,11.3,2.0,25.0,paper_reported_capacity
-object_stacking,Object stacking,11.3,11.3,2.0,25.0,paper_reported_capacity
-cucumber_placing,Cucumber placing,11.3,11.3,12.0,70.0,paper_reported_capacity
-cylinder_transfer,Cylinder transfer,11.3,22.4,43.0,130.0,paper_reported_capacity
