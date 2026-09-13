@@ -1,3 +1,4 @@
+import inspect
 import os
 import time
 import bisect
@@ -391,6 +392,8 @@ def run_online_training(
     env_kwargs_list=None,
     train_mode_during_update: bool = False,
     init_label: str = "Online init",
+    collate_fn_builder: Optional[Callable] = None,
+    sample_fn_builder: Optional[Callable] = None,
 ):
     torch.backends.cudnn.deterministic = not args.ignore_torch_deterministic
     random.seed(args.seed)
@@ -405,9 +408,16 @@ def run_online_training(
     step_infos = get_step_infos(args)
     infos = get_agent_info(args)
     agent_names = infos["agent_names"]
-    collate_fn = make_collate_fn(agent_names)
+    if collate_fn_builder is None:
+        collate_fn = make_collate_fn(agent_names)
+    else:
+        collate_fn = collate_fn_builder(agent_names, device)
 
-    agent = build_agent(args, infos)
+    builder_parameters = inspect.signature(build_agent).parameters
+    if "device" in builder_parameters:
+        agent = build_agent(args, infos, device=device)
+    else:
+        agent = build_agent(args, infos)
     optimizer = build_optimizer(args, agent)
 
     resume_info = maybe_load_initial_agent(args, ckpt, agent, init_label=init_label)
@@ -494,9 +504,14 @@ def run_online_training(
             torch.load(os.path.join(args.eval_agent_dir, "best_agent.pt"), map_location="cpu")
         )
         unwrapped_agent.eval()
+        sample_fn = (
+            make_sample_fn(agent_names, unwrapped_agent, deterministic=True)
+            if sample_fn_builder is None
+            else sample_fn_builder(agent_names, unwrapped_agent, device, deterministic=True)
+        )
         eval_metrics = evaluate(
             n=args.eval_episodes,
-            sample_fn=make_sample_fn(agent_names, unwrapped_agent, deterministic=True),
+            sample_fn=sample_fn,
             eval_envs=eval_envs,
         )
         payload = {k: float(v.mean()) for k, v in eval_metrics.items()}
@@ -549,9 +564,14 @@ def run_online_training(
                 },
             )
 
+            sample_fn = (
+                make_sample_fn(agent_names, unwrapped_agent, deterministic=True)
+                if sample_fn_builder is None
+                else sample_fn_builder(agent_names, unwrapped_agent, device, deterministic=True)
+            )
             eval_metrics = evaluate(
                 n=args.eval_episodes,
-                sample_fn=make_sample_fn(agent_names, unwrapped_agent, deterministic=True),
+                sample_fn=sample_fn,
                 eval_envs=eval_envs,
             )
             eval_payload = {key: float(value.mean()) for key, value in eval_metrics.items()}

@@ -1099,7 +1099,7 @@ class SharedVLA4DActor(nn.Module):
         }
 
 
-class MultiAgentVLAAdapterMAPPOAgent(nn.Module):
+class MultiAgentVLAAdapterAgent(nn.Module):
     def __init__(
         self,
         agent_names: List[str],
@@ -1581,6 +1581,10 @@ class MultiAgentVLAAdapterMAPPOAgent(nn.Module):
             raise RuntimeError(f"Unexpected keys when loading checkpoint: {unexpected}")
         if missing:
             raise RuntimeError(f"Missing keys when loading checkpoint: {missing}")
+
+
+# Backward-compatible name used by existing MAPPO training scripts.
+MultiAgentVLAAdapterMAPPOAgent = MultiAgentVLAAdapterAgent
 
 
 def build_optimizer(args, agent: MultiAgentVLAAdapterMAPPOAgent) -> torch.optim.Optimizer:

@@ -1,0 +1,20 @@
+# Local temporary files
+/tmp/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local VLA survey scripts and spreadsheets
+/scripts/build_vla_landscape_xlsx.py
+/scripts/update_vla_research_details.py
+/VLA调研*.xlsx
+/VLA研究*.xlsx
+/vla_research*.xlsx
+/vla_landscape*.xlsx
+
+# Downloaded papers and extracted paper contents
+*.pdf
+/papers/
+/literature/
+/paper_content/
+/research_sources/

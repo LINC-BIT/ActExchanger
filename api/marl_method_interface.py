@@ -25,13 +25,13 @@ class AgentModelInterface(ABC):
         """Return the ordered names of agents controlled by the policy."""
 
     @abstractmethod
-    def build_model(
+    def build_policy(
         self,
         *,
         device: torch.device,
         config: Mapping[str, Any],
     ) -> nn.Module:
-        """Construct the actor-critic model for the selected workload."""
+        """Construct the policy for the selected workload."""
 
     @abstractmethod
     def build_batch_from_obs(

@@ -81,8 +81,9 @@ def load_input(path: Path) -> dict[str, tuple[np.ndarray, np.ndarray]]:
         if ours is None or ricl is None:
             raise ValueError(f"{name} requires actexchanger and ricl histories")
         rows[name] = (_series(ours), _series(ricl))
-    if not rows:
-        raise ValueError("input JSON contains no recognized workload")
+    missing = [name for name in WORKLOAD_ORDER if name not in rows]
+    if missing:
+        raise ValueError(f"input JSON is missing workloads: {', '.join(missing)}")
     return rows
 
 
@@ -122,7 +123,7 @@ def main() -> None:
     axes = axes.ravel()
     summaries = []
     for ax, name in zip(axes, WORKLOAD_ORDER):
-        ours, ricl = data.get(name, synthetic_history(name, args.points))
+        ours, ricl = data[name]
         count = min(len(ours), len(ricl))
         x = np.linspace(0.0, 300.0, count)
         ours, ricl = ours[:count], ricl[:count]

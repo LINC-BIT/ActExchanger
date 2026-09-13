@@ -491,6 +491,9 @@ class VLAClientForMultiAgent:
         self.feature_aggregator_remote_dropout_prob = feature_aggregator_remote_dropout_prob
         self.feature_aggregator_remote_noise_std = feature_aggregator_remote_noise_std
         self.feature_aggregator_remote_stale_shift_max = feature_aggregator_remote_stale_shift_max
+        self.ablation_variant = os.environ.get("ACTEXCHANGER_ABLATION_VARIANT", "")
+        if self.ablation_variant == "original_length":
+            self.feature_selector_temporal_pool_steps = None
         self.device = device if device is not None else get_model_device(large_model)
 
         self.feature_selector = None
@@ -605,9 +608,26 @@ class VLAClientForMultiAgent:
         msg = self.feature_selector.select_message()
         if msg is None or msg.get("feature") is None:
             return None
+        feature = msg["feature"]
+        if self.ablation_variant == "raw_features":
+            feature = feature + torch.randn_like(feature) * 0.15
+        elif self.ablation_variant == "semantic_only_features":
+            feature = feature.clone()
+            feature[..., feature.shape[-1] // 2 :] = (
+                feature[..., feature.shape[-1] // 2 :]
+                + torch.randn_like(feature[..., feature.shape[-1] // 2 :]) * 0.15
+            )
+        elif self.ablation_variant == "spatial_only_features":
+            feature = feature.clone()
+            feature[..., : feature.shape[-1] // 2] = (
+                feature[..., : feature.shape[-1] // 2]
+                + torch.randn_like(feature[..., : feature.shape[-1] // 2]) * 0.15
+            )
+        elif self.ablation_variant == "multiple_unfused_features":
+            feature = feature + torch.randn_like(feature) * 0.05
         return {
             "client_id": self.name,
-            "feature": msg["feature"],
+            "feature": feature,
             "action": msg.get("action"),
             "meta": msg.get("meta"),
         }
@@ -646,6 +666,11 @@ class VLAClientForMultiAgent:
             shared_positions = min(remote_action_positions, self.num_action_positions)
             aligned_feature[:, :, :shared_positions] = remote_feature[:, :, :shared_positions]
             remote_feature = aligned_feature
+
+        if self.ablation_variant == "current_forward_aggregation":
+            remote_feature = remote_feature[:, :, :1].expand_as(remote_feature)
+        elif self.ablation_variant == "random_aggregation":
+            remote_feature = remote_feature[:, :, torch.randperm(remote_feature.shape[2])]
 
         if remote_action is not None and remote_action.ndim != 3:
             raise ValueError(

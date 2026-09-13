@@ -20,21 +20,22 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#224-experiment-4-discussion-1-in-section-ive-icl-ability">2.2.4 Experiment 4: (Discussion 1 in Section IV.E) ICL Ability</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#225-experiment-5-discussion-2-in-section-ive-comparison-between-vla-models-and-cnns">2.2.5 Experiment 5: (Discussion 2 in Section IV.E) Comparison between VLA Models and CNNs</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#226-experiment-6-discussion-3-in-section-ive-maximum-supported-model-size">2.2.6 Experiment 6: (Discussion 3 in Section IV.E) Maximum supported model size</a><br>
-<a href="#3-addition-of-three-types-of-marl-methods">3. Addition of Three Types of MARL Methods</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-cnn-based-marl-example-happo">3.1 CNN-based MARL Example: HAPPO</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#311-agent-model-interface">3.1.1 Agent Model Interface</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#312-planner-model-interface">3.1.2 Planner Model Interface</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#313-communication-interface">3.1.3 Communication Interface</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#314-training-loop-interface">3.1.4 Training Loop Interface</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-llm-based-marl-example-roco">3.2 LLM-based MARL Example: ROCO</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#321-agent-model-interface">3.2.1 Agent Model Interface</a><br>
+<a href="#3-addition-of-a-new-vla-model-and-three-types-of-marl-methods">3. Addition of a New VLA Model and Three Types of MARL Methods</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-new-vla-model-integration-example-vla-adapter">3.1 New VLA Model Integration Example: VLA-Adapter</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-cnn-based-marl-example-happo">3.2 CNN-based MARL Example: HAPPO</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#321-agent-model-selection">3.2.1 Agent Model Selection</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#322-planner-model-interface">3.2.2 Planner Model Interface</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#323-communication-interface">3.2.3 Communication Interface</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#324-training-loop-interface">3.2.4 Training Loop Interface</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#33-vla-based-marl-example-maple">3.3 VLA-based MARL Example: MAPLE</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#331-agent-model-interface">3.3.1 Agent Model Interface</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#332-communication-interface">3.3.2 Communication Interface</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#333-training-loop-interface">3.3.3 Training Loop Interface</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#324-continual-online-rl-interface">3.2.4 Continual Online RL Interface</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#33-llm-based-marl-example-roco">3.3 LLM-based MARL Example: ROCO</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#331-agent-model-selection">3.3.1 Agent Model Selection</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#332-planner-model-interface">3.3.2 Planner Model Interface</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#333-communication-interface">3.3.3 Communication Interface</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#334-continual-online-rl-interface">3.3.4 Continual Online RL Interface</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#34-vla-based-marl-example-maple">3.4 VLA-based MARL Example: MAPLE</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#341-agent-model-selection">3.4.1 Agent Model Selection</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#342-communication-interface">3.4.2 Communication Interface</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#343-continual-online-rl-interface">3.4.3 Continual Online RL Interface</a><br>
 
 ## 1. Overview
 
@@ -202,8 +203,6 @@
 
 #### 1.2.3 Get Source Code<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
 
-  You can obtain the source code for artifacts evaluation by the following command. **The code does not perform any malicious or destructive operations**.
-
   ```bash
   git clone https://github.com/LINC-BIT/ActExchanger.git
   ```
@@ -289,10 +288,9 @@
 
 **Figure plotting dependencies:**
 
-- Run the command below to install dependencies for plotting scripts:
-  ```bash
-  pip install matplotlib==3.10.8 pypdf==6.16.2
-  ```
+```bash
+pip install matplotlib==3.10.8 pypdf==6.16.2
+```
 
 #### 1.2.5 About Dataset<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
 
@@ -316,14 +314,14 @@
 
 We provide a one-click script `eval/run.sh` that runs all experiments sequentially and produces all resulting figures and tables.
 
-- **(Recommended) Option 1: Minimum working examples (completed within 1 day and 20GB memory)**
+- **Option 1: Minimum working examples (completed within 1 day, 20GB GPU memory, and 30GB disk space)**
   ```bash
   cd <ActExchanger directory>
   bash start_docker.sh
   cd <ActExchanger directory in the container>/eval
   MWE=1 bash run.sh
   ```
-- **Option 2: Full run (completed within 15 days and 60GB memory)**
+- **Option 2: Full run (completed within 15 days, 75GB GPU memory, 150GB disk space)**
   ```bash
   cd <ActExchanger directory>
   bash start_docker.sh
@@ -331,11 +329,9 @@ We provide a one-click script `eval/run.sh` that runs all experiments sequential
   bash run.sh
   ```
 
-The reproducing steps of each experiment are described in Section 2.2.
-
 ### 2.2 Step-by-Step Reproduction<img src="./heading-divider.svg" alt="" width="100%" height="1">
 
-First of all, run the following command:
+Start the container:
 
 ```bash
 cd <ActExchanger directory>
@@ -343,16 +339,25 @@ bash start_docker.sh
 cd <ActExchanger directory in the container>/eval
 ```
 
-Then, run the following commands to reproduce each figure/table in our evaluation.
+#### Notes in the Reproduction<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
+
+- **Clean previous results before running an experiment:**
+
+  ```bash
+  bash ../clean_results.sh
+  bash ../clean_results.sh --results-root /home/Maniskill/ckpt --force
+  ```
+
+  The first command previews the files; `--force` deletes them. Pretraining and SFT checkpoints are preserved.
 
 #### 2.2.1 Experiment 1: (Figure 7 in Section IV.B) Comparison of Accuracy under Dynamic Environment<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
 
-- **Option 1:** Commands for full run on the four multi-agent workloads:
+- **Option 1: Commands for full run (200 hours, 75GB GPU memory, 150GB disk space):**
   ```bash
   cd acc_comparison
   bash run_acc_comparison.sh
   ```
-- **Option 2:** Commands for minimum working examples:
+- **Option 2: Commands for minimum working examples (2.5 hours, 20GB GPU memory, 60GB disk space):**
   ```bash
   cd acc_comparison
   MWE=1 bash run_acc_comparison.sh
@@ -360,12 +365,12 @@ Then, run the following commands to reproduce each figure/table in our evaluatio
 
 #### 2.2.2 Experiment 2: (Figure 9 and Table I in Section IV.C) Comparison of Computational and Communication Costs<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
 
-- **Option 1:** Commands for full run:
+- **Option 1: Commands for full run (200 hours, 75GB GPU memory, 150GB disk space):**
   ```bash
   cd overhead
   bash run_overhead.sh
   ```
-- **Option 2:** Commands for minimum working examples:
+- **Option 2: Commands for minimum working examples (2.5 hours, 20GB GPU memory, 60GB disk space):**
   ```bash
   cd overhead
   MWE=1 bash run_overhead.sh
@@ -373,12 +378,12 @@ Then, run the following commands to reproduce each figure/table in our evaluatio
 
 #### 2.2.3 Experiment 3: (Figure 10 in Section IV.D) Design Choice Validation by Ablation<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
 
-- **Option 1:** Commands for full run:
+- **Option 1: Commands for full run (80 hours, 128GB GPU memory, 150GB disk space):**
   ```bash
   cd ablation
   bash run_ablation.sh
   ```
-- **Option 2:** Commands for minimum working examples:
+- **Option 2: Commands for minimum working examples (40 minutes, 20GB GPU memory, 30GB disk space):**
   ```bash
   cd ablation
   MWE=1 bash run_ablation.sh
@@ -386,12 +391,16 @@ Then, run the following commands to reproduce each figure/table in our evaluatio
 
 #### 2.2.4 Experiment 4: (Discussion 1 in Section IV.E) ICL Ability<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
 
-- **Option 1:** Commands for full run:
+- **Option 1: Commands for full run (30 minutes, 20GB GPU memory, 30GB disk space):**
   ```bash
   cd discussion
+  RICL_RUN_DIR_OBJECT_PICKING_PLACING=<ricl_run> \
+  RICL_RUN_DIR_OBJECT_STACKING=<ricl_run> \
+  RICL_RUN_DIR_CUCUMBER_PLACING=<ricl_run> \
+  RICL_RUN_DIR_CYLINDER_TRANSFER=<ricl_run> \
   bash run_discussion.sh icl
   ```
-- **Option 2:** Commands for minimum working examples:
+- **Option 2: Commands for minimum working examples (10 minutes, 20GB GPU memory, 30GB disk space):**
   ```bash
   cd discussion
   MWE=1 bash run_discussion.sh icl
@@ -399,12 +408,12 @@ Then, run the following commands to reproduce each figure/table in our evaluatio
 
 #### 2.2.5 Experiment 5: (Discussion 2 in Section IV.E) Comparison between VLA Models and CNNs<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
 
-- **Option 1:** Commands for full run:
+- **Option 1: Commands for full run (60 minutes, 75GB GPU memory, 30GB disk space):**
   ```bash
   cd discussion
-  bash run_discussion.sh vla-vs-cnn
+  VLA_RUN_DIR=<vla_run> CNN_RUN_DIR=<cnn_run> bash run_discussion.sh vla-vs-cnn
   ```
-- **Option 2:** Commands for minimum working examples:
+- **Option 2: Commands for minimum working examples (20 minutes, 20GB GPU memory, 30GB disk space):**
   ```bash
   cd discussion
   MWE=1 bash run_discussion.sh vla-vs-cnn
@@ -412,92 +421,172 @@ Then, run the following commands to reproduce each figure/table in our evaluatio
 
 #### 2.2.6 Experiment 6: (Discussion 3 in Section IV.E) Maximum supported model size<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
 
-- **Option 1:** Commands for full run:
+- **Option 1: Commands for full run (90 minutes, 80GB GPU memory, 128GB disk space):**
   ```bash
   cd discussion
-  bash run_discussion.sh model-size
+  MODEL_SIZE_RUN_DIRS=<run_1>,<run_2>,... bash run_discussion.sh model-size
   ```
-- **Option 2:** Commands for minimum working examples:
+- **Option 2: Commands for minimum working examples (10 minutes, 20GB GPU memory, 30GB disk space):**
   ```bash
   cd discussion
   MWE=1 bash run_discussion.sh model-size
   ```
 
 
-## 3. Addition of Three Types of MARL Methods
+## 3. Addition of a New VLA Model and Three Types of MARL Methods
 
-### 3.1 CNN-based MARL Example: HAPPO<img src="./heading-divider.svg" alt="" width="100%" height="1">
-You can add a new CNN-based MARL baseline according to the following steps.
+### 3.1 New VLA Model Integration Example: VLA-Adapter<img src="./heading-divider.svg" alt="" width="100%" height="1">
 
-#### 3.1.1 Agent Model Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
 
-- **Detailed integration steps**:
+  - **Step 1:** Implement `VLAModelInterface`, the VLA-specific extension of `AgentModelInterface`.
 
-  - **Step 1:** Create a new file and define `HAPPOAgentModel`, inherited from `AgentModelInterface`.
+    ```python
+    import importlib
+    from pathlib import Path
+    from types import SimpleNamespace
+
+    from api.vla_model_interface import VLAModelInterface
+
+    class VLAAdapter(VLAModelInterface):
+        def __init__(self, model_dir, agent_spec, *, backend_module):
+            self.model_dir = Path(model_dir)
+            self._agent_spec = agent_spec
+            self.backend_module = backend_module
+
+        @property
+        def model_name(self):
+            return "vla_adapter_smolvla"
+
+        @property
+        def agent_spec(self):
+            return self._agent_spec
+
+        @property
+        def policy_class(self):
+            backend = importlib.import_module(self.backend_module)
+            return backend.MultiAgentVLAAdapterAgent
+    ```
+
+  - **Step 2:** Describe the participating agents and their state/action spaces with `VLAAgentSpec`. These dimensions must match the workload's `get_agent_info()` output.
+
+    ```python
+    spec = VLAAgentSpec(
+        agent_names=("agent-0", "agent-1"),
+        state_dims={"agent-0": state_dim, "agent-1": state_dim},
+        action_dims={"agent-0": action_dim, "agent-1": action_dim},
+        global_state_dim=global_state_dim,
+    )
+    ```
+
+  - **Step 3:** Bind model construction, observation conversion, action/value inference, trainable-module selection, and optimizer creation to the VLA-Adapter backend.
+
+    ```python
+    def build_policy(self, *, device, config):
+        names = list(self.agent_spec.agent_names)
+        return self.policy_class(
+            agent_names=names,
+            state_dim=self.agent_spec.state_dims[names[0]],
+            global_state_dim=self.agent_spec.global_state_dim,
+            action_dim=self.agent_spec.action_dims[names[0]],
+            model_dir=self.model_dir,
+            freeze_vla_backbone=config.get("freeze_vla_backbone", False),
+        ).to(device)
+
+    def build_batch_from_obs(self, obs, *, device):
+        batch = self._backend().build_batch_from_obs(
+            obs, list(self.agent_spec.agent_names)
+        )
+        return {
+            key: value.to(device) if torch.is_tensor(value) else value
+            for key, value in batch.items()
+        }
+
+    def get_action_and_value(self, policy, batch, *, actions_input=None, deterministic=False):
+        return policy.get_action_and_value(dict(batch), actions_input=actions_input)
+
+    def get_action(self, policy, batch, *, deterministic=False):
+        return policy.get_action(dict(batch), deterministic=deterministic)
+
+    def get_value(self, policy, batch):
+        return policy.get_value(dict(batch))
+
+    def configure_trainable_modules(self, policy, *, freeze_vla_backbone):
+        policy.configure_trainable_modules(freeze_vla_backbone)
+
+    def build_optimizer(self, policy, *, config):
+        return self._backend().build_optimizer(SimpleNamespace(**config), policy)
+    ```
+
+  Complete implementation: [`vla_adapter_smolvla_impl.py`](./api/vla_model_interface_examples/vla_adapter_smolvla_impl.py).
+
+  - **Step 4:** Instantiate the adapter with the selected workload backend.
+
+    ```python
+    vla_adapter = VLAAdapter(
+        model_dir="ckpt/vla_adapter_smolvla",
+        agent_spec=spec,
+        backend_module=backend_module,
+    )
+    ```
+
+### 3.2 CNN-based MARL Example: HAPPO<img src="./heading-divider.svg" alt="" width="100%" height="1">
+
+#### 3.2.1 Agent Model Selection<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
+
+  - **Step 1:** Select an `AgentModelInterface` implementation. This example reuses the `VLAAdapter` configured in Section 3.1.
 
     ```python
     from api.marl_method_interface import AgentModelInterface
 
-    class HAPPOAgentModel(AgentModelInterface):
-        ...
+    # The VLAAdapter instance created in Section 3.1, Step 4.
+    agent_model: AgentModelInterface = vla_adapter
     ```
 
-  - **Step 2:** Define the agent names and the state/action dimensions for the selected workload.
-
-    ```python
-    model_impl = HAPPOAgentModel(
-        agent_names=("agent_0", "agent_1"),
-        state_dims={"agent_0": 32, "agent_1": 32},
-        action_dims={"agent_0": 7, "agent_1": 7},
-    )
-    ```
-
-  - **Step 3:** Implement the CNN policy construction, observation conversion, action sampling, value estimation, and optimizer construction.
-
-    ```python
-    def build_model(self, *, device, config):
-        # Return a CNN actor-critic model for the selected workload.
-        ...
-
-    def build_batch_from_obs(self, obs, *, device):
-        # Convert raw ManiSkill observations to the policy batch schema.
-        ...
-
-    def get_action_and_value(self, model, batch, *, actions_input=None, deterministic=False):
-        # Return per-agent actions, log probabilities, entropies, and values.
-        ...
-    ```
-
-  - **Step 4:** Initialize the agent model interface.
-
-    ```python
-    agent_model_impl = HAPPOAgentModel(
-        agent_names=agent_names,
-        state_dims=state_dims,
-        action_dims=action_dims,
-    )
-    ```
-
-  - **Step 5:** Pass the interface to the method integration code.
-
-    ```python
-    agent_model = agent_model_impl.build_model(device=device, config=config)
-    ```
-
-#### 3.1.2 Planner Model Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
-
-- **Detailed integration steps**:
+#### 3.2.2 Planner Model Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
 
   - **Step 1:** Create a planner adapter inherited from `PlannerModelInterface`.
 
     ```python
+    import torch
+
     from api.marl_method_interface import PlannerModelInterface
+    from api.marl_method_interface_examples._common import ZeroPlanner
 
     class HAPPOPlannerModel(PlannerModelInterface):
-        ...
+        planner_name = "happo_planner"
+
+        def build_planner(self, *, agent_model, device, config):
+            return ZeroPlanner(agent_model.agent_names).to(device)
+
+        def plan(self, planner, batch, *, deterministic=False):
+            return planner(batch)
+
+        def get_action_and_value(
+            self, planner, batch, *, actions_input=None, deterministic=False
+        ):
+            output = planner(batch)
+            values = torch.zeros(next(iter(output.values())).shape[0])
+            return output, {}, {}, values
+
+        def build_optimizer(self, planner, *, config):
+            return torch.optim.Adam(
+                planner.parameters(), lr=config.get("learning_rate", 3e-4)
+            )
+
+        def update(self, planner, optimizer, rollout, *, config):
+            output = planner(rollout["batch"])
+            losses = [
+                torch.nn.functional.mse_loss(output[name], rollout["planner_targets"][name])
+                for name in output
+            ]
+            loss = torch.stack(losses).mean()
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+            return {"planner_loss": float(loss.detach())}
     ```
 
-  - **Step 2:** Implement planner construction, high-level planning, planner action/value inference, optimizer construction, and planner updates.
+  - **Step 2:** Initialize the planner with the selected agent model.
 
     ```python
     planner_impl = HAPPOPlannerModel()
@@ -518,20 +607,38 @@ You can add a new CNN-based MARL baseline according to the following steps.
     )
     ```
 
-#### 3.1.3 Communication Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
-
-- **Detailed integration steps**:
+#### 3.2.3 Communication Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
 
   - **Step 1:** Create a communication adapter inherited from `CommunicationInterface`.
 
     ```python
     from api.marl_method_interface import CommunicationInterface
+    from api.marl_method_interface_examples._common import TensorCommunication
 
     class HAPPOCommunication(CommunicationInterface):
-        ...
+        communication_name = "happo_tensor_mean"
+
+        def __init__(self):
+            self._impl = TensorCommunication()
+
+        def encode_message(self, sender, receiver, feature, *, action_mask=None):
+            return self._impl.encode_message(
+                sender, receiver, feature, action_mask=action_mask
+            )
+
+        def decode_message(self, message, *, receiver, device):
+            return self._impl.decode_message(message, receiver=receiver, device=device)
+
+        def aggregate(self, local_feature, remote_features, *, batch=None):
+            return self._impl.aggregate(local_feature, remote_features, batch=batch)
+
+        def transmission_size(self, message):
+            return self._impl.transmission_size(message)
     ```
 
-  - **Step 2:** Implement the HAPPO's message encoding, message decoding, and multi-agent message aggregation.
+  Complete implementation: [`happo_impl.py`](./api/marl_method_interface_examples/happo_impl.py).
+
+  - **Step 2:** Use the communication adapter during agent interaction.
 
     ```python
     communication = HAPPOCommunication()
@@ -552,101 +659,102 @@ You can add a new CNN-based MARL baseline according to the following steps.
     )
     ```
 
-#### 3.1.4 Training Loop Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
+#### 3.2.4 Continual Online RL Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
 
-- **Detailed integration steps**:
-
-  - **Step 1:** Create a training-loop adapter inherited from `TrainingLoopInterface`.
+  - **Step 1:** Implement HAPPO rollout and update callbacks with the workload driver signatures.
 
     ```python
-    from api.marl_method_interface import TrainingLoopInterface
+    def happo_collect_rollout(
+        *, args, agent, collate_fn, envs, next_obs, next_done,
+        accelerator, writer, global_step,
+    ):
+        ...
 
-    class HAPPOTrainingLoop(TrainingLoopInterface):
+    def happo_update_on_policy(
+        args, agent, optimizer, data, collate_fn, accelerator,
+        stage, writer, rollouts_num_aft_env_change=None,
+    ):
         ...
     ```
 
-  - **Step 2:** Implement environment construction, rollout collection, policy updates, evaluation, checkpointing, and the top-level run method.
+  - **Step 2:** Bind HAPPO to the selected agent model and call the shared Online RL entry.
 
     ```python
-    training_loop = HAPPOTrainingLoop()
-    results = training_loop.run(
-        agent_model,
-        planner=planner,
-        communication=communication,
-        config=config,
-        workload="object_stacking",
-        env_list=ENV_LIST,
+    from api.marl_online_rl_interface import CallbackMARLOnlineRL, run_continual_online_rl
+    from workload.online_driver import run_online_training
+
+    marl_method = CallbackMARLOnlineRL(
+        algorithm_name="happo",
+        model_name=agent_model.model_name,
+        collect_rollout_fn=happo_collect_rollout,
+        update_fn=happo_update_on_policy,
+    )
+    run_continual_online_rl(
+        args,
+        agent_model=agent_model,
+        marl_method=marl_method,
+        driver=run_online_training,
     )
     ```
 
-### 3.2 LLM-based MARL Example: ROCO<img src="./heading-divider.svg" alt="" width="100%" height="1">
+### 3.3 LLM-based MARL Example: ROCO<img src="./heading-divider.svg" alt="" width="100%" height="1">
 
-You can add a new LLM-based MARL baseline according to the following steps.
+#### 3.3.1 Agent Model Selection<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
 
-#### 3.2.1 Agent Model Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
-
-- **Detailed integration steps**:
-
-  - **Step 1:** Create a new file and define `ROCOAgentModel`, inherited from `AgentModelInterface`.
+  - **Step 1:** Select an `AgentModelInterface` implementation. This example reuses the `VLAAdapter` configured in Section 3.1.
 
     ```python
     from api.marl_method_interface import AgentModelInterface
 
-    class ROCOAgentModel(AgentModelInterface):
-        ...
+    # The VLAAdapter instance created in Section 3.1, Step 4.
+    agent_model: AgentModelInterface = vla_adapter
     ```
 
-  - **Step 2:** Define the participating agents and their observation, language-context, and action dimensions for the selected workload.
-
-    ```python
-    model_impl = ROCOAgentModel(
-        agent_names=("agent_0", "agent_1"),
-        state_dims={"agent_0": 32, "agent_1": 32},
-        action_dims={"agent_0": 7, "agent_1": 7},
-    )
-    ```
-
-  - **Step 3:** Implement the LLM policy construction, conversion from observations and task context to a policy batch, action sampling, value estimation, and optimizer construction.
-
-    ```python
-    def build_model(self, *, device, config):
-        # Return the ROCO language-conditioned actor-critic model.
-        ...
-
-    def build_batch_from_obs(self, obs, *, device):
-        # Convert observations and task context to the model batch schema.
-        ...
-
-    def get_action_and_value(self, model, batch, *, actions_input=None, deterministic=False):
-        # Return per-agent actions, log probabilities, entropies, and values.
-        ...
-    ```
-
-  - **Step 4:** Initialize the agent model interface and construct the model.
-
-    ```python
-    agent_model_impl = ROCOAgentModel(
-        agent_names=agent_names,
-        state_dims=state_dims,
-        action_dims=action_dims,
-    )
-    agent_model = agent_model_impl.build_model(device=device, config=config)
-    ```
-
-#### 3.2.2 Planner Model Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
-
-- **Detailed integration steps**:
+#### 3.3.2 Planner Model Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
 
   - **Step 1:** Create a planner adapter inherited from `PlannerModelInterface`.
 
     ```python
+    import torch
+
     from api.marl_method_interface import PlannerModelInterface
+    from api.marl_method_interface_examples.roco_impl import _RoCoPlanner
 
     class ROCOPlannerModel(PlannerModelInterface):
-        ...
+        planner_name = "roco_task_planner"
+
+        def build_planner(self, *, agent_model, device, config):
+            backend = config.get("llm_planner_backend")
+            return _RoCoPlanner(agent_model.agent_names, backend=backend).to(device)
+
+        def plan(self, planner, batch, *, deterministic=False):
+            return planner(batch)
+
+        def get_action_and_value(
+            self, planner, batch, *, actions_input=None, deterministic=False
+        ):
+            output = planner(batch)
+            first_agent = planner.agent_names[0]
+            size = batch[f"agent_states_{first_agent}"].shape[0]
+            value = torch.zeros(size, device=next(planner.parameters()).device)
+            return output, {}, {}, value
+
+        def build_optimizer(self, planner, *, config):
+            return torch.optim.Adam(
+                planner.parameters(),
+                lr=config.get("planner_learning_rate", 3e-4),
+            )
+
+        def update(self, planner, optimizer, rollout, *, config):
+            feedback = rollout.get("environment_feedback", "")
+            valid = bool(rollout.get("plan_valid", not bool(feedback)))
+            return {
+                "plan_valid": float(valid),
+                "requires_replanning": float(not valid),
+            }
     ```
 
-  - **Step 2:** Implement planner construction, generation of task-level decisions, planner action/value inference, optimizer construction, and planner updates.
+  - **Step 2:** Initialize the planner with the selected agent model and LLM backend.
 
     ```python
     planner_impl = ROCOPlannerModel()
@@ -665,22 +773,61 @@ You can add a new LLM-based MARL baseline according to the following steps.
         batch,
         deterministic=False,
     )
+    # RoCo-style outputs: dialogue, per-agent sub-tasks, waypoints, and
+    # collision/environment feedback used for the next replanning turn.
+    dialogue = planner_output["dialogue"]
+    subtasks = planner_output["subtasks"]
+    waypoints = planner_output["waypoints"]
     ```
 
-#### 3.2.3 Communication Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
-
-- **Detailed integration steps**:
+#### 3.3.3 Communication Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
 
   - **Step 1:** Create a communication adapter inherited from `CommunicationInterface`.
 
     ```python
     from api.marl_method_interface import CommunicationInterface
+    from api.marl_method_interface_examples._common import TensorCommunication
 
     class ROCOCommunication(CommunicationInterface):
-        ...
+        communication_name = "roco_dialogue_message"
+
+        def __init__(self):
+            self._impl = TensorCommunication()
+
+        def encode_message(
+            self, sender, receiver, feature, *, action_mask=None,
+            dialogue_round=0, subtask=None, waypoints=None,
+            environment_feedback=None,
+        ):
+            message = self._impl.encode_message(
+                sender, receiver, feature, action_mask=action_mask
+            )
+            message.update({
+                "dialogue_round": dialogue_round,
+                "subtask": subtask,
+                "waypoints": waypoints,
+                "environment_feedback": environment_feedback,
+            })
+            return message
+
+        def decode_message(self, message, *, receiver, device):
+            return self._impl.decode_message(message, receiver=receiver, device=device)
+
+        def aggregate(self, local_feature, remote_features, *, batch=None):
+            return self._impl.aggregate(local_feature, remote_features, batch=batch)
+
+        def transmission_size(self, message):
+            tensor_bytes = self._impl.transmission_size(message)
+            text_bytes = sum(
+                len(str(message.get(key, "")).encode("utf-8"))
+                for key in ("subtask", "environment_feedback", "dialogue_round")
+            )
+            return tensor_bytes + text_bytes
     ```
 
-  - **Step 2:** Implement ROCO's message encoding, message decoding, and multi-agent message aggregation.
+  Complete implementation: [`roco_impl.py`](./api/marl_method_interface_examples/roco_impl.py).
+
+  - **Step 2:** Use the communication adapter to exchange ROCO planning information.
 
     ```python
     communication = ROCOCommunication()
@@ -688,7 +835,13 @@ You can add a new LLM-based MARL baseline according to the following steps.
         sender="agent_0",
         receiver="agent_1",
         feature=local_feature,
+        dialogue_round=2,
+        subtask="move the left object to the shared staging area",
+        waypoints=waypoints["agent_1"],
+        environment_feedback="collision risk near the shelf",
     )
+    # The message carries RoCo's dialogue round, sub-task, waypoint plan, and
+    # environment feedback so the next planner turn can re-plan if needed.
     received_feature = communication.decode_message(
         message,
         receiver="agent_1",
@@ -700,101 +853,89 @@ You can add a new LLM-based MARL baseline according to the following steps.
     )
     ```
 
-#### 3.2.4 Training Loop Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
+#### 3.3.4 Continual Online RL Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
 
-- **Detailed integration steps**:
-
-  - **Step 1:** Create a training-loop adapter inherited from `TrainingLoopInterface`.
+  - **Step 1:** Implement ROCO rollout and update callbacks with the workload driver signatures.
 
     ```python
-    from api.marl_method_interface import TrainingLoopInterface
+    def roco_collect_rollout(
+        *, args, agent, collate_fn, envs, next_obs, next_done,
+        accelerator, writer, global_step,
+    ):
+        ...
 
-    class ROCOTrainingLoop(TrainingLoopInterface):
+    def roco_update_on_policy(
+        args, agent, optimizer, data, collate_fn, accelerator,
+        stage, writer, rollouts_num_aft_env_change=None,
+    ):
         ...
     ```
 
-  - **Step 2:** Implement environment construction, rollout collection, policy updates, evaluation, checkpointing, and the top-level run method.
+  - **Step 2:** Bind ROCO to the selected agent model and call the shared Online RL entry.
 
     ```python
-    training_loop = ROCOTrainingLoop()
-    results = training_loop.run(
-        agent_model,
-        planner=planner,
-        communication=communication,
-        config=config,
-        workload="object_stacking",
-        env_list=ENV_LIST,
+    from api.marl_online_rl_interface import CallbackMARLOnlineRL, run_continual_online_rl
+    from workload.online_driver import run_online_training
+
+    marl_method = CallbackMARLOnlineRL(
+        algorithm_name="roco",
+        model_name=agent_model.model_name,
+        collect_rollout_fn=roco_collect_rollout,
+        update_fn=roco_update_on_policy,
+    )
+    run_continual_online_rl(
+        args,
+        agent_model=agent_model,
+        marl_method=marl_method,
+        driver=run_online_training,
     )
     ```
 
-### 3.3 VLA-based MARL Example: MAPLE<img src="./heading-divider.svg" alt="" width="100%" height="1">
+### 3.4 VLA-based MARL Example: MAPLE<img src="./heading-divider.svg" alt="" width="100%" height="1">
 
-You can add a new VLA-based MARL baseline according to the following steps.
+#### 3.4.1 Agent Model Selection<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
 
-#### 3.3.1 Agent Model Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
-
-- **Detailed integration steps**:
-
-  - **Step 1:** Create a new file and define `MAPLEAgentModel`, inherited from `AgentModelInterface`.
+  - **Step 1:** Select an `AgentModelInterface` implementation. This example reuses the `VLAAdapter` configured in Section 3.1.
 
     ```python
     from api.marl_method_interface import AgentModelInterface
 
-    class MAPLEAgentModel(AgentModelInterface):
-        ...
+    # The VLAAdapter instance created in Section 3.1, Step 4.
+    agent_model: AgentModelInterface = vla_adapter
     ```
 
-  - **Step 2:** Define the VLA agent names and their state/action dimensions for the selected workload.
-
-    ```python
-    model_impl = MAPLEAgentModel(
-        agent_names=("agent_0", "agent_1"),
-        state_dims={"agent_0": 32, "agent_1": 32},
-        action_dims={"agent_0": 7, "agent_1": 7},
-    )
-    ```
-
-  - **Step 3:** Implement VLA model construction, conversion from visual-language observations to a policy batch, action sampling, value estimation, and optimizer construction.
-
-    ```python
-    def build_model(self, *, device, config):
-        # Return the MAPLE VLA actor-critic model.
-        ...
-
-    def build_batch_from_obs(self, obs, *, device):
-        # Convert visual observations, task text, and states to the policy batch schema.
-        ...
-
-    def get_action_and_value(self, model, batch, *, actions_input=None, deterministic=False):
-        # Return per-agent actions, log probabilities, entropies, and values.
-        ...
-    ```
-
-  - **Step 4:** Initialize the agent model interface and construct the VLA policy.
-
-    ```python
-    agent_model_impl = MAPLEAgentModel(
-        agent_names=agent_names,
-        state_dims=state_dims,
-        action_dims=action_dims,
-    )
-    agent_model = agent_model_impl.build_model(device=device, config=config)
-    ```
-
-#### 3.3.2 Communication Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
-
-- **Detailed integration steps**:
+#### 3.4.2 Communication Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
 
   - **Step 1:** Create a communication adapter inherited from `CommunicationInterface`.
 
     ```python
     from api.marl_method_interface import CommunicationInterface
+    from api.marl_method_interface_examples._common import TensorCommunication
 
     class MAPLECommunication(CommunicationInterface):
-        ...
+        communication_name = "maple_latent_tensor"
+
+        def __init__(self):
+            self._impl = TensorCommunication()
+
+        def encode_message(self, sender, receiver, feature, *, action_mask=None):
+            return self._impl.encode_message(
+                sender, receiver, feature, action_mask=action_mask
+            )
+
+        def decode_message(self, message, *, receiver, device):
+            return self._impl.decode_message(message, receiver=receiver, device=device)
+
+        def aggregate(self, local_feature, remote_features, *, batch=None):
+            return self._impl.aggregate(local_feature, remote_features, batch=batch)
+
+        def transmission_size(self, message):
+            return self._impl.transmission_size(message)
     ```
 
-  - **Step 2:** Implement MAPLE's message encoding, message decoding, and multi-agent message aggregation.
+  Complete implementation: [`maple_impl.py`](./api/marl_method_interface_examples/maple_impl.py).
+
+  - **Step 2:** Use the communication adapter to exchange MAPLE latent features.
 
     ```python
     communication = MAPLECommunication()
@@ -814,28 +955,42 @@ You can add a new VLA-based MARL baseline according to the following steps.
     )
     ```
 
-#### 3.3.3 Training Loop Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
+#### 3.4.3 Continual Online RL Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
 
-- **Detailed integration steps**:
-
-  - **Step 1:** Create a training-loop adapter inherited from `TrainingLoopInterface`.
+  - **Step 1:** Implement MAPLE rollout and update callbacks with the workload driver signatures.
 
     ```python
-    from api.marl_method_interface import TrainingLoopInterface
+    def maple_collect_rollout(
+        *, args, agent, collate_fn, envs, next_obs, next_done,
+        accelerator, writer, global_step,
+    ):
+        ...
 
-    class MAPLETrainingLoop(TrainingLoopInterface):
+    def maple_update_on_policy(
+        args, agent, optimizer, data, collate_fn, accelerator,
+        stage, writer, rollouts_num_aft_env_change=None,
+    ):
         ...
     ```
 
-  - **Step 2:** Implement environment construction, rollout collection, MAPLE updates, evaluation, checkpointing, and the top-level run method.
+  - **Step 2:** Bind MAPLE to the selected agent model and call the shared Online RL entry.
 
     ```python
-    training_loop = MAPLETrainingLoop()
-    results = training_loop.run(
-        agent_model,
-        communication=communication,
-        config=config,
-        workload="object_stacking",
-        env_list=ENV_LIST,
+    from api.marl_online_rl_interface import CallbackMARLOnlineRL, run_continual_online_rl
+    from workload.online_driver import run_online_training
+
+    marl_method = CallbackMARLOnlineRL(
+        algorithm_name="maple",
+        model_name=agent_model.model_name,
+        collect_rollout_fn=maple_collect_rollout,
+        update_fn=maple_update_on_policy,
+        rollout_mode="maple",
+        train_mode_during_update=True,
+    )
+    run_continual_online_rl(
+        args,
+        agent_model=agent_model,
+        marl_method=marl_method,
+        driver=run_online_training,
     )
     ```

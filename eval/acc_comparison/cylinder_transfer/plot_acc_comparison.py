@@ -1,5 +1,7 @@
 from pathlib import Path
 import argparse
+import json
+from types import SimpleNamespace
 
 import matplotlib
 
@@ -23,15 +25,37 @@ LINE_STYLES = {
 
 
 def load_scalar_events(tb_dir: Path, tag: str):
-    accumulator = event_accumulator.EventAccumulator(
-        str(tb_dir),
-        size_guidance={event_accumulator.SCALARS: 0},
-    )
-    accumulator.Reload()
-    if tag not in accumulator.Tags().get("scalars", []):
-        return []
-    return accumulator.Scalars(tag)
+    if tb_dir.exists():
+        accumulator = event_accumulator.EventAccumulator(
+            str(tb_dir),
+            size_guidance={event_accumulator.SCALARS: 0},
+        )
+        accumulator.Reload()
+        if tag in accumulator.Tags().get("scalars", []):
+            return accumulator.Scalars(tag)
 
+    metrics_path = tb_dir.parent / "metrics.json"
+    if not metrics_path.is_file():
+        return []
+    try:
+        rows = json.loads(metrics_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return []
+    if not isinstance(rows, list):
+        return []
+
+    points = []
+    for index, row in enumerate(rows):
+        if not isinstance(row, dict):
+            continue
+        try:
+            value = float(row.get("score", row.get("success_once")))
+        except (TypeError, ValueError):
+            continue
+        step = int(row.get("step", index))
+        elapsed_minutes = float(row.get("elapsed_minutes", index))
+        points.append(SimpleNamespace(step=step, value=value, wall_time=elapsed_minutes * 60.0))
+    return points
 
 def build_curve(events, x_axis: str):
     if x_axis == "time":

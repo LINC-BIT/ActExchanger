@@ -60,8 +60,8 @@ def plot_breakdown(rows: list[dict], output_path: Path, *, colored: bool) -> Non
     fig.subplots_adjust(left=0.34, right=0.96, bottom=0.18, top=0.94)
     module_1_color = "#8b8b8b" if colored else "#989898"
     module_2_color = "#4c93c7" if colored else "#d1d1d1"
-    ax.barh(y, module_1, height=0.14, color=module_1_color, edgecolor="black", linewidth=1.0, label="Local feature sample + transfer")
-    ax.barh(y, module_2, left=module_1, height=0.14, color=module_2_color, edgecolor="black", linewidth=1.0, label="Feature aggregator")
+    ax.barh(y, module_1, height=0.14, color=module_1_color, edgecolor="black", linewidth=1.0, label="Action-grained knowledge generator")
+    ax.barh(y, module_2, left=module_1, height=0.14, color=module_2_color, edgecolor="black", linewidth=1.0, label="Action-grained knowledge aggregator")
     ax.set_yticks(y)
     ax.set_yticklabels(visible)
     ax.invert_yaxis()

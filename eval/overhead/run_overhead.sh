@@ -7,39 +7,26 @@ PYTHON_BIN="${PYTHON_BIN:-python}"
 cd "${REPO_ROOT}"
 
 WORKLOADS=(object_picking_placing object_stacking cucumber_placing cylinder_transfer)
-METHODS=(DICG MAT TGCNET MAPLE COMATRACK MAPORL MPDF MAGRPO)
+
+RUN_ACC_COMPARISON="${RUN_ACC_COMPARISON:-1}"
+SKIP_SAME_ACC="${SKIP_SAME_ACC:-${MWE:-0}}"
+
+if [[ "${RUN_ACC_COMPARISON}" == "1" ]]; then
+  echo "[run_overhead] running Experiment 1 accuracy comparison"
+  bash "${REPO_ROOT}/eval/acc_comparison/run_acc_comparison.sh"
+fi
 
 run_same_accuracy() {
   local workload="$1"
-  local prefix="${workload^^}"
-  local run_var="${prefix}_RUN_DIR"
-  local baseline_var="${prefix}_BASELINE_RUN_DIR"
-  local run_dir="${!run_var:-${RUN_DIR:-}}"
-  local baseline_run_dir="${!baseline_var:-${BASELINE_RUN_DIR:-}}"
   local csv_output="${REPO_ROOT}/tmp/overhead_same_acc_${workload}.csv"
   local json_output="${REPO_ROOT}/tmp/overhead_same_acc_${workload}.json"
   local plot_output="${REPO_ROOT}/tmp/overhead_same_acc_${workload}.png"
   local args=(
     --workload "${workload}"
-    --run-dir "${run_dir}"
-    --baseline-run-dir "${baseline_run_dir}"
+    --acc-comparison-wrapper "${REPO_ROOT}/eval/acc_comparison/${workload}/run_acc_comparison.sh"
     --output-csv "${csv_output}"
     --output-json "${json_output}"
   )
-
-  if [[ -z "${run_dir}" || -z "${baseline_run_dir}" ]]; then
-    echo "Missing ${prefix}_RUN_DIR or ${prefix}_BASELINE_RUN_DIR" >&2
-    exit 2
-  fi
-
-  for method in "${METHODS[@]}"; do
-    local variable="${prefix}_${method}_RUN_DIR"
-    local common_variable="${method}_RUN_DIR"
-    local value="${!variable:-${!common_variable:-}}"
-    if [[ -n "${value}" ]]; then
-      args+=("--$(printf '%s' "${method}" | tr '[:upper:]' '[:lower:]')-run-dir" "${value}")
-    fi
-  done
 
   echo "[run_overhead] same-accuracy: ${workload}"
   "${PYTHON_BIN}" "${SCRIPT_DIR}/same_acc.py" "${args[@]}"
@@ -48,10 +35,12 @@ run_same_accuracy() {
     --output "${plot_output}"
 }
 
-for workload in "${WORKLOADS[@]}"; do
-  run_same_accuracy "${workload}"
-done
+if [[ "${SKIP_SAME_ACC}" != "1" ]]; then
+  for workload in "${WORKLOADS[@]}"; do
+    run_same_accuracy "${workload}"
+  done
 
+fi
 BREAKDOWN_JSON="${REPO_ROOT}/tmp/overhead_module_breakdown.json"
 BREAKDOWN_PLOT="${REPO_ROOT}/tmp/overhead_module_breakdown.png"
 BREAKDOWN_COLORED_PLOT="${REPO_ROOT}/tmp/overhead_module_breakdown_color.png"

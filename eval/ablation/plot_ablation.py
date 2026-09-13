@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import zipfile
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -46,6 +47,7 @@ GROUP_ORDER = {
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--xlsx", type=Path, default=XLSX_PATH)
+    parser.add_argument("--results-json", type=Path, default=None)
     parser.add_argument("--out-png", type=Path, default=OUT_PNG)
     parser.add_argument("--out-pdf", type=Path, default=OUT_PDF)
     parser.add_argument("--gap", type=float, default=0.30)
@@ -118,6 +120,23 @@ def load_rows(path: Path):
     return rows
 
 
+def load_result_rows(path: Path):
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    entries = payload.get("rows", []) if isinstance(payload, dict) else payload
+    rows = [{}, {}]
+    for entry in entries:
+        if not isinstance(entry, dict):
+            continue
+        rows.append(
+            {
+                "A": str(entry.get("type", "")),
+                "B": str(entry.get("choice", "")),
+                "C": str(entry.get("accuracy", "")),
+            }
+        )
+    return rows
+
+
 def build_groups(rows):
     groups = []
     current = None
@@ -158,7 +177,7 @@ def main():
     ]
     plt.rcParams["hatch.linewidth"] = args.hatch_linewidth
 
-    rows = load_rows(args.xlsx)
+    rows = load_result_rows(args.results_json) if args.results_json is not None else load_rows(args.xlsx)
     groups = build_groups(rows)
 
     y_positions = []
@@ -182,7 +201,7 @@ def main():
         group_labels.append((0.5 * (group_start_y + group_end_y), GROUP_DISPLAY.get(group["type"], group["type"])))
         y += gap
 
-    if values:
+    if values and args.results_json is None:
         current_max = max(values)
         if current_max > 0:
             scale = args.target_max_acc / current_max

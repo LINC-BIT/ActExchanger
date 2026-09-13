@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Measure wall-clock time required to reach the same accuracy as ours."""
+"""Build same-accuracy cutoffs from Experiment 1 accuracy histories."""
 
 from __future__ import annotations
 
@@ -7,6 +7,8 @@ import argparse
 import csv
 import json
 import math
+import os
+import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -36,6 +38,9 @@ DEFAULT_TAG = "eval/success_once"
 class Point:
     x: float
     y: float
+    step: float | None = None
+    elapsed_minutes: float | None = None
+    index: int = 0
 
 
 def _number(value: Any) -> float | None:
@@ -75,25 +80,30 @@ def _row_value(row: dict[str, Any]) -> float | None:
     return None
 
 
-def _row_x(row: dict[str, Any], x_axis: str, index: int) -> float:
-    if x_axis == "step":
-        for key in ("step", "global_step", "iteration", "update"):
-            value = _number(row.get(key))
-            if value is not None:
-                return value
-        return float(index)
+def _row_step(row: dict[str, Any], index: int) -> float:
+    for key in ("step", "global_step", "iteration", "update"):
+        value = _number(row.get(key))
+        if value is not None:
+            return value
+    return float(index)
+
+
+def _row_elapsed_minutes(row: dict[str, Any]) -> float | None:
     for key in ("minutes", "time_minutes", "elapsed_minutes"):
         value = _number(row.get(key))
         if value is not None:
             return value
-    for key in ("seconds", "time_seconds", "elapsed_seconds", "wall_time_seconds"):
+    for key in ("seconds", "time_seconds", "elapsed_seconds", "wall_time_seconds", "wall_time"):
         value = _number(row.get(key))
         if value is not None:
             return value / 60.0
-    value = _number(row.get("wall_time"))
-    if value is not None:
-        return value / 60.0
-    return float(index)
+    return None
+
+
+def _row_x(row: dict[str, Any], x_axis: str, index: int) -> float:
+    if x_axis == "step":
+        return _row_step(row, index)
+    return _row_elapsed_minutes(row) if _row_elapsed_minutes(row) is not None else float(index)
 
 
 def _load_tensorboard(run_dir: Path, tag: str, x_axis: str) -> list[Point]:
@@ -118,7 +128,15 @@ def _load_tensorboard(run_dir: Path, tag: str, x_axis: str) -> list[Point]:
     points = []
     for event in events:
         x = event.step if x_axis == "step" else (event.wall_time - base_wall_time) / 60.0
-        points.append(Point(float(x), float(event.value)))
+        points.append(
+            Point(
+                float(x),
+                float(event.value),
+                step=float(event.step),
+                elapsed_minutes=(event.wall_time - base_wall_time) / 60.0,
+                index=len(points),
+            )
+        )
     return points
 
 
@@ -128,17 +146,36 @@ def _load_json_curve(run_dir: Path, x_axis: str) -> list[Point]:
         if not path.exists():
             continue
         rows = _json_rows(_read_json(path))
-        grouped: dict[float, list[float]] = {}
+        points = []
         for index, row in enumerate(rows):
             value = _row_value(row)
-            if value is not None:
-                grouped.setdefault(_row_x(row, x_axis, index), []).append(value)
-        points = [Point(x, sum(values) / len(values)) for x, values in grouped.items()]
+            if value is None:
+                continue
+            elapsed_minutes = _row_elapsed_minutes(row)
+            points.append(
+                Point(
+                    _row_x(row, x_axis, index),
+                    value,
+                    step=_row_step(row, index),
+                    elapsed_minutes=elapsed_minutes,
+                    index=index,
+                )
+            )
         if points:
-            if x_axis == "time" and points:
-                base_x = min(point.x for point in points)
-                points = [Point(point.x - base_x, point.y) for point in points]
-            return sorted(points, key=lambda point: point.x)
+            points.sort(key=lambda point: point.x)
+            if x_axis == "time":
+                base_x = points[0].x
+                points = [
+                    Point(
+                        point.x - base_x,
+                        point.y,
+                        step=point.step,
+                        elapsed_minutes=point.elapsed_minutes,
+                        index=point.index,
+                    )
+                    for point in points
+                ]
+            return points
     return []
 
 
@@ -175,12 +212,12 @@ def target_accuracy(points: list[Point], mode: str, topk: int) -> float | None:
     return sum(values[: max(1, min(topk, len(values)))]) / max(1, min(topk, len(values)))
 
 
-def first_reach(points: list[Point], target: float | None, tolerance: float) -> float | None:
+def first_reach(points: list[Point], target: float | None, tolerance: float) -> Point | None:
     if target is None:
         return None
     for point in sorted(points, key=lambda item: item.x):
         if point.y + tolerance >= target:
-            return point.x
+            return point
     return None
 
 
@@ -190,18 +227,60 @@ def _relative(value: float | None, reference: float | None) -> float | None:
     return reference / value
 
 
+def _wrapper_run_directories(wrapper: Path, workload: str) -> dict[str, Path]:
+    try:
+        lines = wrapper.read_text(encoding="utf-8").splitlines()
+    except OSError as error:
+        raise ValueError(f"Cannot read Experiment 1 wrapper: {wrapper}") from error
+
+    values: dict[str, Path] = {}
+    prefix = workload.upper()
+    for variable in ("RUN_DIR", "BASELINE_RUN_DIR", *(attribute.upper() for _, attribute in METHOD_FLAGS.values() if attribute != "baseline_run_dir")):
+        match = next(
+            (
+                re.match(
+                    rf'^\s*{re.escape(variable)}="\$\{{{re.escape(variable)}:?-([^}}]*)\}}"',
+                    line,
+                )
+                for line in lines
+                if line.startswith(f"{variable}=")
+            ),
+            None,
+        )
+        if match is None:
+            continue
+        configured = os.environ.get(f"{prefix}_{variable}") or os.environ.get(variable) or match.group(1)
+        if configured:
+            values[variable] = Path(configured)
+    return values
+
+
+def _apply_experiment_one_wrapper(args: argparse.Namespace) -> None:
+    if args.acc_comparison_wrapper is None:
+        return
+    paths = _wrapper_run_directories(args.acc_comparison_wrapper, args.workload)
+    for attribute, variable in (("run_dir", "RUN_DIR"), ("baseline_run_dir", "BASELINE_RUN_DIR")):
+        if getattr(args, attribute) is None:
+            setattr(args, attribute, paths.get(variable))
+    for _, (_, attribute) in METHOD_FLAGS.items():
+        if attribute == "baseline_run_dir" or getattr(args, attribute) is not None:
+            continue
+        variable = attribute.upper()
+        setattr(args, attribute, paths.get(variable))
+
+
 def build_rows(args: argparse.Namespace) -> tuple[list[dict[str, Any]], float | None]:
     ours = load_curve(args.run_dir, args.tag, args.x_axis)
     target = target_accuracy(ours, args.target_mode, args.topk)
     methods: list[tuple[str, Path | None]] = [("Ours", args.run_dir)]
     for _, (label, attribute) in METHOD_FLAGS.items():
         methods.append((label, getattr(args, attribute)))
-    ours_time = first_reach(ours, target, args.tolerance)
+    ours_reach = first_reach(ours, target, args.tolerance)
     time_unit = "steps" if args.x_axis == "step" or not has_wall_clock_axis(args.run_dir) else "minutes"
     rows = []
     for label, run_dir in methods:
         points = ours if label == "Ours" else load_curve(run_dir, args.tag, args.x_axis)
-        reached = ours_time if label == "Ours" else first_reach(points, target, args.tolerance)
+        reached = ours_reach if label == "Ours" else first_reach(points, target, args.tolerance)
         rows.append(
             {
                 "workload": WORKLOADS[args.workload],
@@ -209,9 +288,15 @@ def build_rows(args: argparse.Namespace) -> tuple[list[dict[str, Any]], float | 
                 "method": label,
                 "run_dir": "" if run_dir is None else str(run_dir),
                 "target_accuracy": target,
-                "reach_time": reached,
+                "cutoff_index": None if reached is None else reached.index,
+                "cutoff_step": None if reached is None else reached.step,
+                "cutoff_elapsed_minutes": None if reached is None else reached.elapsed_minutes,
+                "reach_time": None if reached is None else reached.x,
                 "time_unit": time_unit,
-                "speedup_vs_ours": _relative(reached, ours_time),
+                "speedup_vs_ours": _relative(
+                    None if reached is None else reached.x,
+                    None if ours_reach is None else ours_reach.x,
+                ),
                 "status": "missing_curve" if not points else ("reached" if reached is not None else "not_reached"),
             }
         )
@@ -233,6 +318,7 @@ def write_outputs(rows: list[dict[str, Any]], csv_path: Path, json_path: Path, a
         "x_axis": args.x_axis,
         "target_mode": args.target_mode,
         "target_accuracy": rows[0].get("target_accuracy") if rows else None,
+        "cutoff_definition": "first Experiment 1 evaluation point reaching the ActExchanger target accuracy",
         "rows": rows,
     }
     json_path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
@@ -241,8 +327,14 @@ def write_outputs(rows: list[dict[str, Any]], csv_path: Path, json_path: Path, a
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--workload", required=True, choices=sorted(WORKLOADS))
-    parser.add_argument("--run-dir", type=Path, required=True, help="ActExchanger run directory")
-    parser.add_argument("--baseline-run-dir", type=Path, required=True)
+    parser.add_argument("--run-dir", type=Path, default=None, help="ActExchanger Experiment 1 run directory")
+    parser.add_argument("--baseline-run-dir", type=Path, default=None)
+    parser.add_argument(
+        "--acc-comparison-wrapper",
+        type=Path,
+        default=None,
+        help="Experiment 1 workload wrapper used to resolve run directories",
+    )
     for flag, (label, _) in METHOD_FLAGS.items():
         if flag == "baseline":
             continue
@@ -255,6 +347,9 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--output-csv", type=Path, default=None)
     parser.add_argument("--output-json", type=Path, default=None)
     args = parser.parse_args(argv)
+    _apply_experiment_one_wrapper(args)
+    if args.run_dir is None or args.baseline_run_dir is None:
+        parser.error("provide --run-dir and --baseline-run-dir, or --acc-comparison-wrapper")
     default_stem = args.workload
     csv_path = args.output_csv or Path("tmp") / f"overhead_same_acc_{default_stem}.csv"
     json_path = args.output_json or Path("tmp") / f"overhead_same_acc_{default_stem}.json"

@@ -1126,7 +1126,7 @@ class SharedInternVLActor(nn.Module):
         return self.bin_indices_to_env_actions(sampled["tokens"])
 
 
-class MultiAgentVLAAdapterMAPPOAgent(nn.Module):
+class MultiAgentVLAAdapterAgent(nn.Module):
     def __init__(
         self,
         agent_names: List[str],
@@ -1391,6 +1391,10 @@ class MultiAgentVLAAdapterMAPPOAgent(nn.Module):
                 raise RuntimeError(f"Missing keys when loading LoRA checkpoint: {missing}")
             return
         self.load_state_dict(state_dict)
+
+
+# Backward-compatible name used by existing MAPPO training scripts.
+MultiAgentVLAAdapterMAPPOAgent = MultiAgentVLAAdapterAgent
 
 
 def build_optimizer(args, agent: MultiAgentVLAAdapterMAPPOAgent) -> torch.optim.Optimizer:

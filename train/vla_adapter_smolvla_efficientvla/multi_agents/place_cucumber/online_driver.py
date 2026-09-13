@@ -287,6 +287,8 @@ def run_online_training(
     env_kwargs_list=None,
     train_mode_during_update: bool = False,
     init_label: str = "Online init",
+    collate_fn_builder: Optional[Callable] = None,
+    sample_fn_builder: Optional[Callable] = None,
 ):
     torch.backends.cudnn.deterministic = not args.ignore_torch_deterministic
     random.seed(args.seed)
@@ -301,9 +303,9 @@ def run_online_training(
     step_infos = get_step_infos(args)
     infos = get_agent_info(args)
     agent_names = infos["agent_names"]
-    collate_fn = make_collate_fn(agent_names)
+    collate_fn = make_collate_fn(agent_names) if collate_fn_builder is None else collate_fn_builder(agent_names, device)
 
-    agent = build_agent(args, infos)
+    agent = build_agent(args, infos, device=device) if "device" in inspect.signature(build_agent).parameters else build_agent(args, infos)
     optimizer = build_optimizer(args, agent)
     clients = None
     if getattr(args, "not_train_aggregator", False):
@@ -402,9 +404,10 @@ def run_online_training(
             torch.load(os.path.join(args.eval_agent_dir, "best_agent.pt"), map_location="cpu")
         )
         unwrapped_agent.eval()
+        sample_fn = make_sample_fn(agent_names, unwrapped_agent, deterministic=True) if sample_fn_builder is None else sample_fn_builder(agent_names, unwrapped_agent, device, deterministic=True)
         eval_metrics = evaluate(
             n=args.eval_episodes,
-            sample_fn=make_sample_fn(agent_names, unwrapped_agent, deterministic=True),
+            sample_fn=sample_fn,
             eval_envs=eval_envs,
         )
         payload = {k: float(v.mean()) for k, v in eval_metrics.items()}
@@ -460,9 +463,10 @@ def run_online_training(
                 for client in clients.values():
                     client.use_eval_feature_selector_strategy()
 
+            sample_fn = make_sample_fn(agent_names, unwrapped_agent, deterministic=True) if sample_fn_builder is None else sample_fn_builder(agent_names, unwrapped_agent, device, deterministic=True)
             eval_metrics = evaluate(
                 n=args.eval_episodes,
-                sample_fn=make_sample_fn(agent_names, unwrapped_agent, deterministic=True),
+                sample_fn=sample_fn,
                 eval_envs=eval_envs,
             )
             if clients is not None:
@@ -475,7 +479,7 @@ def run_online_training(
 
             score = eval_payload.get("success_once", eval_payload.get("success_rate", next(iter(eval_payload.values()))))
             pbar.set_postfix(eval_score=score, env=current_env_name)
-            metrics_log.append({"step": global_steps, "score": float(score), "env": current_env_name})
+            metrics_log.append({"step": global_steps, "score": float(score), "env": current_env_name, "elapsed_minutes": float(elapsed_minutes)})
             dump_json(ckpt["metrics"], metrics_log)
             if score >= best_score:
                 best_score = float(score)
