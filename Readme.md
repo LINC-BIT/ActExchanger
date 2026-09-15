@@ -462,7 +462,7 @@ cd <ActExchanger directory in the container>/eval
   </thead>
   <tbody>
     <tr>
-      <td align="center">✓</td>
+      <td align="center">&#9745;</td>
       <td align="center">VLA-Adapter</td>
       <td align="center"><a href="./api/vla_model_interface_examples/vla_adapter_smolvla_impl.py">demo</a></td>
       <td align="center"><a href="#312-example-adding-vla-adapter">guide</a></td>
@@ -470,7 +470,7 @@ cd <ActExchanger directory in the container>/eval
       <td align="center"><a href="https://ojs.aaai.org/index.php/AAAI/article/view/38931">VLA-Adapter: An Effective Paradigm for Tiny-Scale Vision-Language-Action Model</a></td>
     </tr>
     <tr>
-      <td align="center">✓</td>
+      <td align="center">&#9745;</td>
       <td align="center">OpenVLA</td>
       <td align="center"><a href="./train/vla_adapter_openvla/multi_agents/two_robot_stack/mixed_sft_agent.py">demo</a></td>
       <td align="center"><a href="./docs/implementation_guides/openvla.md">guide</a></td>
@@ -478,7 +478,7 @@ cd <ActExchanger directory in the container>/eval
       <td align="center"><a href="https://proceedings.mlr.press/v270/kim25c.html">OpenVLA: An Open-Source Vision-Language-Action Model</a></td>
     </tr>
     <tr>
-      <td align="center">✓</td>
+      <td align="center">&#9745;</td>
       <td align="center">SmolVLA</td>
       <td align="center"><a href="./train/vla_adapter_smolvla/multi_agents/two_robot_pick/mixed_sft_agent.py">demo</a></td>
       <td align="center"><a href="./docs/implementation_guides/smolvla.md">guide</a></td>
@@ -486,7 +486,7 @@ cd <ActExchanger directory in the container>/eval
       <td align="center"><a href="https://arxiv.org/abs/2506.01844">SmolVLA: A Vision-Language-Action Model for Affordable and Efficient Robotics</a></td>
     </tr>
     <tr>
-      <td align="center">✓</td>
+      <td align="center">&#9745;</td>
       <td align="center">EfficientVLA</td>
       <td align="center"><a href="./train/vla_adapter_smolvla_efficientvla/multi_agents/place_cucumber/mixed_agent.py">demo</a></td>
       <td align="center"><a href="./docs/implementation_guides/efficientvla.md">guide</a></td>
@@ -494,7 +494,7 @@ cd <ActExchanger directory in the container>/eval
       <td align="center"><a href="https://proceedings.neurips.cc/paper_files/paper/2025/hash/3a2ef31a1e45908901adc0ca853a8faf-Abstract-Conference.html">EfficientVLA: Training-Free Acceleration and Compression for Vision-Language-Action Models</a></td>
     </tr>
     <tr>
-      <td align="center">✓</td>
+      <td align="center">&#9745;</td>
       <td align="center">TinyVLA</td>
       <td align="center"><a href="./train/vla_adapter_smolvla_efficientvla_tinyvla_flower/multi_agents/pass_object_five_robots/mixed_agent.py">demo</a></td>
       <td align="center"><a href="./docs/implementation_guides/tinyvla.md">guide</a></td>
@@ -502,7 +502,7 @@ cd <ActExchanger directory in the container>/eval
       <td align="center"><a href="https://doi.org/10.1109/LRA.2025.3544909">TinyVLA: Toward Fast, Data-Efficient Vision-Language-Action Models for Robotic Manipulation</a></td>
     </tr>
     <tr>
-      <td align="center">✓</td>
+      <td align="center">&#9745;</td>
       <td align="center">FLOWER</td>
       <td align="center"><a href="./train/vla_adapter_smolvla_efficientvla_tinyvla_flower/multi_agents/pass_object_five_robots/mixed_agent.py">demo</a></td>
       <td align="center"><a href="./docs/implementation_guides/flower.md">guide</a></td>
@@ -633,7 +633,7 @@ cd <ActExchanger directory in the container>/eval
   </thead>
   <tbody>
     <tr>
-      <td align="center">✓</td>
+      <td align="center">&#9745;</td>
       <td align="center">HAPPO</td>
       <td align="center"><a href="./api/marl_method_interface_examples/happo_impl.py">demo</a></td>
       <td align="center"><a href="#322-example-adding-happo">guide</a></td>
@@ -641,7 +641,7 @@ cd <ActExchanger directory in the container>/eval
       <td align="center"><a href="https://openreview.net/forum?id=EcGGFkNTxdJ">Trust Region Policy Optimisation in Multi-Agent Reinforcement Learning</a></td>
     </tr>
     <tr>
-      <td align="center">✓</td>
+      <td align="center">&#9745;</td>
       <td align="center">MAPPO</td>
       <td align="center"><a href="./train/marl/mappo/base.py">demo</a></td>
       <td align="center"><a href="./docs/implementation_guides/mappo.md">guide</a></td>
@@ -649,7 +649,7 @@ cd <ActExchanger directory in the container>/eval
       <td align="center"><a href="https://dl.acm.org/doi/10.5555/3600270.3602057">The Surprising Effectiveness of PPO in Cooperative Multi-Agent Games</a></td>
     </tr>
     <tr>
-      <td align="center">✓</td>
+      <td align="center">&#9745;</td>
       <td align="center">MAT</td>
       <td align="center"><a href="./train/marl/mat/model.py">demo</a></td>
       <td align="center"><a href="./docs/implementation_guides/mat.md">guide</a></td>
@@ -657,7 +657,7 @@ cd <ActExchanger directory in the container>/eval
       <td align="center"><a href="https://dl.acm.org/doi/10.5555/3600270.3601471">Multi-Agent Reinforcement Learning Is a Sequence Modeling Problem</a></td>
     </tr>
     <tr>
-      <td align="center">✓</td>
+      <td align="center">&#9745;</td>
       <td align="center">DICG</td>
       <td align="center"><a href="./train/marl/dicg/model.py">demo</a></td>
       <td align="center"><a href="./docs/implementation_guides/dicg.md">guide</a></td>
@@ -665,7 +665,7 @@ cd <ActExchanger directory in the container>/eval
       <td align="center"><a href="https://www.ifaamas.org/Proceedings/aamas2021/pdfs/p764.pdf">Deep Implicit Coordination Graphs for Multi-Agent Reinforcement Learning</a></td>
     </tr>
     <tr>
-      <td align="center">✓</td>
+      <td align="center">&#9745;</td>
       <td align="center">TGCNet</td>
       <td align="center"><a href="./train/marl/tgcnet/model.py">demo</a></td>
       <td align="center"><a href="./docs/implementation_guides/tgcnet.md">guide</a></td>
@@ -859,7 +859,7 @@ cd <ActExchanger directory in the container>/eval
   </thead>
   <tbody>
     <tr>
-      <td align="center">✓</td>
+      <td align="center">&#9745;</td>
       <td align="center">RoCo</td>
       <td align="center"><a href="./api/marl_method_interface_examples/roco_impl.py">demo</a></td>
       <td align="center"><a href="#332-example-adding-roco">guide</a></td>
@@ -867,7 +867,7 @@ cd <ActExchanger directory in the container>/eval
       <td align="center"><a href="https://ieeexplore.ieee.org/document/10610855">RoCo: Dialectic Multi-Robot Collaboration with Large Language Models</a></td>
     </tr>
     <tr>
-      <td align="center">✓</td>
+      <td align="center">&#9745;</td>
       <td align="center">MAGRPO</td>
       <td align="center"><a href="./train/marl/magrpo/base.py">demo</a></td>
       <td align="center"><a href="./docs/implementation_guides/magrpo.md">guide</a></td>
@@ -875,7 +875,7 @@ cd <ActExchanger directory in the container>/eval
       <td align="center"><a href="https://ojs.aaai.org/index.php/AAAI/article/view/40487">LLM Collaboration with Multi-Agent Reinforcement Learning</a></td>
     </tr>
     <tr>
-      <td align="center">✓</td>
+      <td align="center">&#9745;</td>
       <td align="center">MAPoRL</td>
       <td align="center"><a href="./train/marl/maporl/base.py">demo</a></td>
       <td align="center"><a href="./docs/implementation_guides/maporl.md">guide</a></td>
@@ -883,7 +883,7 @@ cd <ActExchanger directory in the container>/eval
       <td align="center"><a href="https://aclanthology.org/2025.acl-long.1459/">MAPoRL: Multi-Agent Post-Co-Training for Collaborative Large Language Models with Reinforcement Learning</a></td>
     </tr>
     <tr>
-      <td align="center">✓</td>
+      <td align="center">&#9745;</td>
       <td align="center">MPDF</td>
       <td align="center"><a href="./train/marl/mpdf/base.py">demo</a></td>
       <td align="center"><a href="./docs/implementation_guides/mpdf.md">guide</a></td>
@@ -1103,7 +1103,7 @@ cd <ActExchanger directory in the container>/eval
   </thead>
   <tbody>
     <tr>
-      <td align="center">✓</td>
+      <td align="center">&#9745;</td>
       <td align="center">MAPLE</td>
       <td align="center"><a href="./train/marl/maple/models.py">demo</a></td>
       <td align="center"><a href="#342-example-adding-maple">guide</a></td>
@@ -1111,7 +1111,7 @@ cd <ActExchanger directory in the container>/eval
       <td align="center"><a href="https://arxiv.org/abs/2605.14201">MAPLE: Latent Multi-Agent Play for End-to-End Autonomous Driving</a></td>
     </tr>
     <tr>
-      <td align="center">✓</td>
+      <td align="center">&#9745;</td>
       <td align="center">CoMaTrack</td>
       <td align="center"><a href="./train/marl/comatrack/base.py">demo</a></td>
       <td align="center"><a href="./docs/implementation_guides/comatrack.md">guide</a></td>
