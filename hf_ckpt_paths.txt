@@ -1,0 +1,8 @@
+# ActExchanger initialization checkpoints downloaded by dep*.sh.
+# Keep these paths aligned with the defaults in train/**/run_*.sh.
+ckpt/TwoRobotPickCube-v2/sft/pandas_pandas/vla_adapter_smolvla_sft/20260628-151306/latest_agent.pt
+ckpt/TwoRobotStackCubeUR10e-v1/sft/panda_ur10e_panda_gripper/vla_adapter_openvla_sft/20260726-180924/latest_agent.pt
+ckpt/PlaceCucumber-v1/sft/panda_widowx_widowx/vla_adapter_smolvla_efficientvla_sft/20260709-054512/best_agent.pt
+ckpt/PlaceCucumber-v1/ppo/panda_widowx_widowx/toy_cnn_place_cucumber_mappo_pretrain/20260705-072956/best_agent.pt
+ckpt/PassObjectFiveRobots-v1/sft/panda_so100_widowx_xarm6_inspire/mixed_five_vla_100m_pass_object_sft/20260716-045646/best_agent.pt
+ckpt/PassObjectFiveRobots-v1/ppo/panda_so100_widowx_xarm6_inspire/toy_cnn_pass_object_mappo_pretrain/20260712-131713/best_agent_full.pt

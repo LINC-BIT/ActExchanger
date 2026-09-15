@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import importlib
+import inspect
 from pathlib import Path
 from types import ModuleType
 from typing import Any, Mapping, Optional
@@ -11,7 +12,7 @@ import torch
 from torch import nn
 from torch.optim import Optimizer
 
-from api.vla_model_interface import VLAAgentSpec, VLAModelInterface
+from api.vla_model_interface import VLAActionOutput, VLAAgentSpec, VLAModelInterface
 
 
 class VLAAdapter(VLAModelInterface):
@@ -70,22 +71,50 @@ class VLAAdapter(VLAModelInterface):
             for key, value in batch.items()
         }
 
-    def get_action_and_value(
+    def generate_actions(
         self,
         policy: nn.Module,
         batch: Mapping[str, Any],
         *,
         actions_input: Optional[Mapping[str, Any]] = None,
         deterministic: bool = False,
-    ):
-        del deterministic
-        actions, log_probs, entropies, values = policy.get_action_and_value(
-            dict(batch), actions_input=actions_input
-        )
-        return actions, log_probs, entropies, values
+        return_value: bool = False,
+        generation_config: Optional[Mapping[str, Any]] = None,
+    ) -> VLAActionOutput:
+        generation_config = dict(generation_config or {})
+        if not return_value and actions_input is None:
+            requested = {"deterministic": deterministic, **generation_config}
+            accepted = inspect.signature(policy.get_action).parameters
+            applied = {key: value for key, value in requested.items() if key in accepted}
+            actions = policy.get_action(dict(batch), **applied)
+            return VLAActionOutput(
+                actions=actions,
+                auxiliary={
+                    "generation_config": generation_config,
+                    "applied_generation_config": applied,
+                },
+            )
 
-    def get_action(self, policy: nn.Module, batch: Mapping[str, Any], *, deterministic: bool = False):
-        return policy.get_action(dict(batch), deterministic=deterministic)
+        requested = {
+            "actions_input": actions_input,
+            "deterministic": deterministic,
+            **generation_config,
+        }
+        accepted = inspect.signature(policy.get_action_and_value).parameters
+        applied = {key: value for key, value in requested.items() if key in accepted}
+        result = policy.get_action_and_value(dict(batch), **applied)
+        actions, log_probs, entropies, values, *head_outputs = result
+        return VLAActionOutput(
+            actions=actions,
+            log_probs=log_probs,
+            entropies=entropies,
+            values=values if return_value else None,
+            auxiliary={
+                "generation_config": generation_config,
+                "applied_generation_config": applied,
+                "head_outputs": tuple(head_outputs),
+            },
+        )
 
     def get_value(self, policy: nn.Module, batch: Mapping[str, Any]) -> torch.Tensor:
         return policy.get_value(dict(batch))

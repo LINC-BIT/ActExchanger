@@ -301,7 +301,12 @@ iter_hf_ckpt_paths() {
             echo "[dep.sh] checkpoint list file not found: $HF_CKPT_LIST" >&2
             exit 1
         fi
-        cat "$HF_CKPT_LIST"
+        sed '/^[[:space:]]*#/d; /^[[:space:]]*$/d' "$HF_CKPT_LIST"
+        return
+    fi
+
+    if [[ -f "$ROOT_DIR/hf_ckpt_paths.txt" ]]; then
+        sed '/^[[:space:]]*#/d; /^[[:space:]]*$/d' "$ROOT_DIR/hf_ckpt_paths.txt"
         return
     fi
     default_hf_ckpt_paths
@@ -375,7 +380,7 @@ download_hf_checkpoints() {
     if [[ -n "$HF_CKPT_LIST" ]]; then
         log "checkpoint list: $HF_CKPT_LIST"
     else
-        log "checkpoint list: built into dep.sh"
+        log "checkpoint list: $ROOT_DIR/hf_ckpt_paths.txt"
     fi
 
     if command -v hf >/dev/null 2>&1; then
@@ -507,20 +512,6 @@ for index, rel_path in enumerate(resolved_paths, start=1):
     download_file(rel_path)
 PY
 }
-
-ensure_default_state_norm_stats() {
-    local target="$ROOT_DIR/eval/ckpt/PickCube-v1/ours/octo/PickCube-v1-state-max-min.pth"
-    local source="$ROOT_DIR/eval/train/octo/ours/PickCube-v1-state-max-min.pth"
-
-    if [[ -f "$target" || ! -f "$source" ]]; then
-        return
-    fi
-
-    log "staging fallback state norm stats: $target"
-    mkdir -p "$(dirname "$target")"
-    cp "$source" "$target"
-}
-
 
 ensure_container_maniskill_dirs() {
     docker exec "$CONTAINER_NAME" bash -lc \
@@ -903,7 +894,6 @@ check_nvidia_runtime
 pull_image
 resolve_container_paths
 download_hf_checkpoints
-ensure_default_state_norm_stats
 remove_existing_container
 ensure_container
 install_container_runtime_dependencies

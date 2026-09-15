@@ -8,7 +8,7 @@ import torch
 from torch import nn
 from torch.optim import Optimizer
 
-from api.vla_model_interface import VLAAgentSpec, VLAModelInterface
+from api.vla_model_interface import VLAActionOutput, VLAAgentSpec, VLAModelInterface
 
 
 class NewVLAModelImplementation(VLAModelInterface):
@@ -35,23 +35,16 @@ class NewVLAModelImplementation(VLAModelInterface):
     def build_batch_from_obs(self, obs: Any, *, device: torch.device) -> Mapping[str, Any]:
         raise NotImplementedError
 
-    def get_action_and_value(
+    def generate_actions(
         self,
         policy: nn.Module,
         batch: Mapping[str, Any],
         *,
         actions_input: Optional[Mapping[str, Any]] = None,
         deterministic: bool = False,
-    ):
-        raise NotImplementedError
-
-    def get_action(
-        self,
-        policy: nn.Module,
-        batch: Mapping[str, Any],
-        *,
-        deterministic: bool = False,
-    ) -> Mapping[str, Any]:
+        return_value: bool = False,
+        generation_config: Optional[Mapping[str, Any]] = None,
+    ) -> VLAActionOutput:
         raise NotImplementedError
 
     def get_value(self, policy: nn.Module, batch: Mapping[str, Any]) -> torch.Tensor:

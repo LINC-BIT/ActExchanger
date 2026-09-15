@@ -21,21 +21,29 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#225-experiment-5-discussion-2-in-section-ive-comparison-between-vla-models-and-cnns">2.2.5 Experiment 5: (Discussion 2 in Section IV.E) Comparison between VLA Models and CNNs</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#226-experiment-6-discussion-3-in-section-ive-maximum-supported-model-size">2.2.6 Experiment 6: (Discussion 3 in Section IV.E) Maximum supported model size</a><br>
 <a href="#3-addition-of-a-new-vla-model-and-three-types-of-marl-methods">3. Addition of a New VLA Model and Three Types of MARL Methods</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-new-vla-model-integration-example-vla-adapter">3.1 New VLA Model Integration Example: VLA-Adapter</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-cnn-based-marl-example-happo">3.2 CNN-based MARL Example: HAPPO</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#321-agent-model-selection">3.2.1 Agent Model Selection</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#322-planner-model-interface">3.2.2 Planner Model Interface</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#323-communication-interface">3.2.3 Communication Interface</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#324-continual-online-rl-interface">3.2.4 Continual Online RL Interface</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#33-llm-based-marl-example-roco">3.3 LLM-based MARL Example: ROCO</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#331-agent-model-selection">3.3.1 Agent Model Selection</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#332-planner-model-interface">3.3.2 Planner Model Interface</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#333-communication-interface">3.3.3 Communication Interface</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#334-continual-online-rl-interface">3.3.4 Continual Online RL Interface</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#34-vla-based-marl-example-maple">3.4 VLA-based MARL Example: MAPLE</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#341-agent-model-selection">3.4.1 Agent Model Selection</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#342-communication-interface">3.4.2 Communication Interface</a><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#343-continual-online-rl-interface">3.4.3 Continual Online RL Interface</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-new-vla-model-integration">3.1 New VLA Model Integration</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#311-implemented-vla-models">3.1.1 Implemented VLA Models</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#312-example-adding-vla-adapter">3.1.2 Example: Adding VLA-Adapter</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-cnn-based-marl-integration">3.2 CNN-based MARL Integration</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#321-implemented-cnn-based-marl-methods">3.2.1 Implemented CNN-based MARL Methods</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#322-example-adding-happo">3.2.2 Example: Adding HAPPO</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3221-agent-model-selection">3.2.2.1 Agent Model Selection</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3222-planner-model-interface">3.2.2.2 Planner Model Interface</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3223-communication-interface">3.2.2.3 Communication Interface</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3224-continual-online-rl-interface">3.2.2.4 Continual Online RL Interface</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#33-llm-based-marl-integration">3.3 LLM-based MARL Integration</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#331-implemented-llm-based-marl-methods">3.3.1 Implemented LLM-based MARL Methods</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#332-example-adding-roco">3.3.2 Example: Adding ROCO</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3321-agent-model-selection">3.3.2.1 Agent Model Selection</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3322-planner-model-interface">3.3.2.2 Planner Model Interface</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3323-communication-interface">3.3.2.3 Communication Interface</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3324-continual-online-rl-interface">3.3.2.4 Continual Online RL Interface</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#34-vla-based-marl-integration">3.4 VLA-based MARL Integration</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#341-implemented-vla-based-marl-methods">3.4.1 Implemented VLA-based MARL Methods</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#342-example-adding-maple">3.4.2 Example: Adding MAPLE</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3421-agent-model-selection">3.4.2.1 Agent Model Selection</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3422-communication-interface">3.4.2.2 Communication Interface</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3423-continual-online-rl-interface">3.4.2.3 Continual Online RL Interface</a><br>
 
 ## 1. Overview
 
@@ -273,6 +281,8 @@
   # and install other dependencies in the Docker container
   TYPE=100M bash dep.sh
   ```
+
+  On a new device, set `HF_CKPT_REPO=<checkpoint repository>` before running the script. The files listed in [`hf_ckpt_paths.txt`](./hf_ckpt_paths.txt) are downloaded to `ckpt/`.
   
 
 - **Step 4: Check the installation:** ([Example running screenshots](imgs/4.1.png))
@@ -302,7 +312,7 @@ pip install matplotlib==3.10.8 pypdf==6.16.2
 | Unusual behavior | Treatment |
 | --- | --- |
 | `ModuleNotFoundError` for `mani_skill`, `gymnasium`, `accelerate`, or a VLA model | Activate the training environment containing the selected model and install the missing package. Plotting scripts only need the plotting dependencies listed above. |
-| Checkpoint `FileNotFoundError` | Supply the corresponding `RUN_DIR`/`BASELINE_RUN_DIR` or the explicit run-directory arguments. The repository does not include large checkpoints. |
+| Checkpoint `FileNotFoundError` | Set `HF_CKPT_REPO` and rerun the dependency script, or supply the required checkpoint path explicitly. |
 | CUDA out-of-memory | Reduce the environment count, batch size, or rollout length; use the minimal benchmark scripts first; then move to a GPU with sufficient VRAM. |
 | No GPU found in a training launcher | Run the CPU-compatible plotting/benchmark command, or configure `CUDA_VISIBLE_DEVICES` before launching a GPU experiment. |
 | A plotting script cannot find TensorBoard metrics | Check that the run directory contains `metrics_history.json` or TensorBoard event files and pass the correct run directory. |
@@ -435,8 +445,74 @@ cd <ActExchanger directory in the container>/eval
 
 ## 3. Addition of a New VLA Model and Three Types of MARL Methods
 
-### 3.1 New VLA Model Integration Example: VLA-Adapter<img src="./heading-divider.svg" alt="" width="100%" height="1">
+### 3.1 New VLA Model Integration<img src="./heading-divider.svg" alt="" width="100%" height="1">
 
+#### 3.1.1 Implemented VLA Models<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
+
+<table align="center" style="text-align: center;">
+  <thead>
+    <tr>
+      <th align="center"></th>
+      <th align="center"><div align="center">Model</div></th>
+      <th align="center"><div align="center">Script</div></th>
+      <th align="center"><div align="center">Implementation Guide</div></th>
+      <th align="center"><div align="center">Open-source Link</div></th>
+      <th align="center"><div align="center">Paper</div></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center">✓</td>
+      <td align="center">VLA-Adapter</td>
+      <td align="center"><a href="./api/vla_model_interface_examples/vla_adapter_smolvla_impl.py">demo</a></td>
+      <td align="center"><a href="#312-example-adding-vla-adapter">guide</a></td>
+      <td align="center"><a href="https://github.com/OpenHelix-Team/VLA-Adapter">Link</a></td>
+      <td align="center"><a href="https://ojs.aaai.org/index.php/AAAI/article/view/38931">VLA-Adapter: An Effective Paradigm for Tiny-Scale Vision-Language-Action Model</a></td>
+    </tr>
+    <tr>
+      <td align="center">✓</td>
+      <td align="center">OpenVLA</td>
+      <td align="center"><a href="./train/vla_adapter_openvla/multi_agents/two_robot_stack/mixed_sft_agent.py">demo</a></td>
+      <td align="center"><a href="./docs/implementation_guides/openvla.md">guide</a></td>
+      <td align="center"><a href="https://github.com/openvla/openvla">Link</a></td>
+      <td align="center"><a href="https://proceedings.mlr.press/v270/kim25c.html">OpenVLA: An Open-Source Vision-Language-Action Model</a></td>
+    </tr>
+    <tr>
+      <td align="center">✓</td>
+      <td align="center">SmolVLA</td>
+      <td align="center"><a href="./train/vla_adapter_smolvla/multi_agents/two_robot_pick/mixed_sft_agent.py">demo</a></td>
+      <td align="center"><a href="./docs/implementation_guides/smolvla.md">guide</a></td>
+      <td align="center"><a href="https://github.com/huggingface/lerobot">Link</a></td>
+      <td align="center"><a href="https://arxiv.org/abs/2506.01844">SmolVLA: A Vision-Language-Action Model for Affordable and Efficient Robotics</a></td>
+    </tr>
+    <tr>
+      <td align="center">✓</td>
+      <td align="center">EfficientVLA</td>
+      <td align="center"><a href="./train/vla_adapter_smolvla_efficientvla/multi_agents/place_cucumber/mixed_agent.py">demo</a></td>
+      <td align="center"><a href="./docs/implementation_guides/efficientvla.md">guide</a></td>
+      <td align="center">-</td>
+      <td align="center"><a href="https://proceedings.neurips.cc/paper_files/paper/2025/hash/3a2ef31a1e45908901adc0ca853a8faf-Abstract-Conference.html">EfficientVLA: Training-Free Acceleration and Compression for Vision-Language-Action Models</a></td>
+    </tr>
+    <tr>
+      <td align="center">✓</td>
+      <td align="center">TinyVLA</td>
+      <td align="center"><a href="./train/vla_adapter_smolvla_efficientvla_tinyvla_flower/multi_agents/pass_object_five_robots/mixed_agent.py">demo</a></td>
+      <td align="center"><a href="./docs/implementation_guides/tinyvla.md">guide</a></td>
+      <td align="center"><a href="https://github.com/liyaxuanliyaxuan/TinyVLA">Link</a></td>
+      <td align="center"><a href="https://doi.org/10.1109/LRA.2025.3544909">TinyVLA: Toward Fast, Data-Efficient Vision-Language-Action Models for Robotic Manipulation</a></td>
+    </tr>
+    <tr>
+      <td align="center">✓</td>
+      <td align="center">FLOWER</td>
+      <td align="center"><a href="./train/vla_adapter_smolvla_efficientvla_tinyvla_flower/multi_agents/pass_object_five_robots/mixed_agent.py">demo</a></td>
+      <td align="center"><a href="./docs/implementation_guides/flower.md">guide</a></td>
+      <td align="center"><a href="https://github.com/intuitive-robots/flower_vla_calvin">Link</a></td>
+      <td align="center"><a href="https://proceedings.mlr.press/v305/reuss25a.html">FLOWER: Democratizing Generalist Robot Policies with Efficient Vision-Language-Flow Models</a></td>
+    </tr>
+  </tbody>
+</table>
+
+#### 3.1.2 Example: Adding VLA-Adapter<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
 
   - **Step 1:** Implement `VLAModelInterface`, the VLA-specific extension of `AgentModelInterface`.
 
@@ -445,7 +521,7 @@ cd <ActExchanger directory in the container>/eval
     from pathlib import Path
     from types import SimpleNamespace
 
-    from api.vla_model_interface import VLAModelInterface
+    from api.vla_model_interface import VLAActionOutput, VLAModelInterface
 
     class VLAAdapter(VLAModelInterface):
         def __init__(self, model_dir, agent_spec, *, backend_module):
@@ -478,7 +554,7 @@ cd <ActExchanger directory in the container>/eval
     )
     ```
 
-  - **Step 3:** Bind model construction, observation conversion, action/value inference, trainable-module selection, and optimizer creation to the VLA-Adapter backend.
+  - **Step 3:** Bind model construction, observation conversion, unified action generation, value inference, trainable-module selection, and optimizer creation to the VLA-Adapter backend.
 
     ```python
     def build_policy(self, *, device, config):
@@ -501,11 +577,24 @@ cd <ActExchanger directory in the container>/eval
             for key, value in batch.items()
         }
 
-    def get_action_and_value(self, policy, batch, *, actions_input=None, deterministic=False):
-        return policy.get_action_and_value(dict(batch), actions_input=actions_input)
-
-    def get_action(self, policy, batch, *, deterministic=False):
-        return policy.get_action(dict(batch), deterministic=deterministic)
+    def generate_actions(
+        self, policy, batch, *, actions_input=None, deterministic=False,
+        return_value=False, generation_config=None,
+    ):
+        generation_config = dict(generation_config or {})
+        if not return_value and actions_input is None:
+            actions = policy.get_action(dict(batch), deterministic=deterministic)
+            return VLAActionOutput(actions=actions, auxiliary=generation_config)
+        actions, log_probs, entropies, values = policy.get_action_and_value(
+            dict(batch), actions_input=actions_input
+        )
+        return VLAActionOutput(
+            actions=actions,
+            log_probs=log_probs,
+            entropies=entropies,
+            values=values if return_value else None,
+            auxiliary=generation_config,
+        )
 
     def get_value(self, policy, batch):
         return policy.get_value(dict(batch))
@@ -527,9 +616,68 @@ cd <ActExchanger directory in the container>/eval
     )
     ```
 
-### 3.2 CNN-based MARL Example: HAPPO<img src="./heading-divider.svg" alt="" width="100%" height="1">
+### 3.2 CNN-based MARL Integration<img src="./heading-divider.svg" alt="" width="100%" height="1">
 
-#### 3.2.1 Agent Model Selection<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
+#### 3.2.1 Implemented CNN-based MARL Methods<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
+
+<table align="center" style="text-align: center;">
+  <thead>
+    <tr>
+      <th align="center"></th>
+      <th align="center"><div align="center">Method</div></th>
+      <th align="center"><div align="center">Script</div></th>
+      <th align="center"><div align="center">Implementation Guide</div></th>
+      <th align="center"><div align="center">Open-source Link</div></th>
+      <th align="center"><div align="center">Paper</div></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center">✓</td>
+      <td align="center">HAPPO</td>
+      <td align="center"><a href="./api/marl_method_interface_examples/happo_impl.py">demo</a></td>
+      <td align="center"><a href="#322-example-adding-happo">guide</a></td>
+      <td align="center"><a href="https://github.com/PKU-MARL/HARL">Link</a></td>
+      <td align="center"><a href="https://openreview.net/forum?id=EcGGFkNTxdJ">Trust Region Policy Optimisation in Multi-Agent Reinforcement Learning</a></td>
+    </tr>
+    <tr>
+      <td align="center">✓</td>
+      <td align="center">MAPPO</td>
+      <td align="center"><a href="./train/marl/mappo/base.py">demo</a></td>
+      <td align="center"><a href="./docs/implementation_guides/mappo.md">guide</a></td>
+      <td align="center"><a href="https://github.com/marlbenchmark/on-policy">Link</a></td>
+      <td align="center"><a href="https://dl.acm.org/doi/10.5555/3600270.3602057">The Surprising Effectiveness of PPO in Cooperative Multi-Agent Games</a></td>
+    </tr>
+    <tr>
+      <td align="center">✓</td>
+      <td align="center">MAT</td>
+      <td align="center"><a href="./train/marl/mat/model.py">demo</a></td>
+      <td align="center"><a href="./docs/implementation_guides/mat.md">guide</a></td>
+      <td align="center"><a href="https://github.com/PKU-MARL/Multi-Agent-Transformer">Link</a></td>
+      <td align="center"><a href="https://dl.acm.org/doi/10.5555/3600270.3601471">Multi-Agent Reinforcement Learning Is a Sequence Modeling Problem</a></td>
+    </tr>
+    <tr>
+      <td align="center">✓</td>
+      <td align="center">DICG</td>
+      <td align="center"><a href="./train/marl/dicg/model.py">demo</a></td>
+      <td align="center"><a href="./docs/implementation_guides/dicg.md">guide</a></td>
+      <td align="center"><a href="https://github.com/sisl/DICG">Link</a></td>
+      <td align="center"><a href="https://www.ifaamas.org/Proceedings/aamas2021/pdfs/p764.pdf">Deep Implicit Coordination Graphs for Multi-Agent Reinforcement Learning</a></td>
+    </tr>
+    <tr>
+      <td align="center">✓</td>
+      <td align="center">TGCNet</td>
+      <td align="center"><a href="./train/marl/tgcnet/model.py">demo</a></td>
+      <td align="center"><a href="./docs/implementation_guides/tgcnet.md">guide</a></td>
+      <td align="center"><a href="https://github.com/ZhuohuiZhang/TGCNet">Link</a></td>
+      <td align="center"><a href="https://ojs.aaai.org/index.php/AAAI/article/view/34507">Bridging Training and Execution via Dynamic Directed Graph-Based Communication in Cooperative Multi-Agent Systems</a></td>
+    </tr>
+  </tbody>
+</table>
+
+#### 3.2.2 Example: Adding HAPPO<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
+
+##### 3.2.2.1 Agent Model Selection
 
   - **Step 1:** Select an `AgentModelInterface` implementation. This example reuses the `VLAAdapter` configured in Section 3.1.
 
@@ -540,7 +688,7 @@ cd <ActExchanger directory in the container>/eval
     agent_model: AgentModelInterface = vla_adapter
     ```
 
-#### 3.2.2 Planner Model Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
+##### 3.2.2.2 Planner Model Interface
 
   - **Step 1:** Create a planner adapter inherited from `PlannerModelInterface`.
 
@@ -605,7 +753,7 @@ cd <ActExchanger directory in the container>/eval
     )
     ```
 
-#### 3.2.3 Communication Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
+##### 3.2.2.3 Communication Interface
 
   - **Step 1:** Create a communication adapter inherited from `CommunicationInterface`.
 
@@ -656,7 +804,7 @@ cd <ActExchanger directory in the container>/eval
     )
     ```
 
-#### 3.2.4 Continual Online RL Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
+##### 3.2.2.4 Continual Online RL Interface
 
   - **Step 1:** Implement HAPPO rollout and update callbacks with the workload driver signatures.
 
@@ -694,9 +842,60 @@ cd <ActExchanger directory in the container>/eval
     )
     ```
 
-### 3.3 LLM-based MARL Example: ROCO<img src="./heading-divider.svg" alt="" width="100%" height="1">
+### 3.3 LLM-based MARL Integration<img src="./heading-divider.svg" alt="" width="100%" height="1">
 
-#### 3.3.1 Agent Model Selection<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
+#### 3.3.1 Implemented LLM-based MARL Methods<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
+
+<table align="center" style="text-align: center;">
+  <thead>
+    <tr>
+      <th align="center"></th>
+      <th align="center"><div align="center">Method</div></th>
+      <th align="center"><div align="center">Script</div></th>
+      <th align="center"><div align="center">Implementation Guide</div></th>
+      <th align="center"><div align="center">Open-source Link</div></th>
+      <th align="center"><div align="center">Paper</div></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center">✓</td>
+      <td align="center">RoCo</td>
+      <td align="center"><a href="./api/marl_method_interface_examples/roco_impl.py">demo</a></td>
+      <td align="center"><a href="#332-example-adding-roco">guide</a></td>
+      <td align="center"><a href="https://github.com/MandiZhao/robot-collab">Link</a></td>
+      <td align="center"><a href="https://ieeexplore.ieee.org/document/10610855">RoCo: Dialectic Multi-Robot Collaboration with Large Language Models</a></td>
+    </tr>
+    <tr>
+      <td align="center">✓</td>
+      <td align="center">MAGRPO</td>
+      <td align="center"><a href="./train/marl/magrpo/base.py">demo</a></td>
+      <td align="center"><a href="./docs/implementation_guides/magrpo.md">guide</a></td>
+      <td align="center"><a href="https://github.com/OpenMLRL/CoMLRL">Link</a></td>
+      <td align="center"><a href="https://ojs.aaai.org/index.php/AAAI/article/view/40487">LLM Collaboration with Multi-Agent Reinforcement Learning</a></td>
+    </tr>
+    <tr>
+      <td align="center">✓</td>
+      <td align="center">MAPoRL</td>
+      <td align="center"><a href="./train/marl/maporl/base.py">demo</a></td>
+      <td align="center"><a href="./docs/implementation_guides/maporl.md">guide</a></td>
+      <td align="center"><a href="https://github.com/chanwoo-park-official/MAPoRL">Link</a></td>
+      <td align="center"><a href="https://aclanthology.org/2025.acl-long.1459/">MAPoRL: Multi-Agent Post-Co-Training for Collaborative Large Language Models with Reinforcement Learning</a></td>
+    </tr>
+    <tr>
+      <td align="center">✓</td>
+      <td align="center">MPDF</td>
+      <td align="center"><a href="./train/marl/mpdf/base.py">demo</a></td>
+      <td align="center"><a href="./docs/implementation_guides/mpdf.md">guide</a></td>
+      <td align="center">-</td>
+      <td align="center"><a href="https://ojs.aaai.org/index.php/AAAI/article/view/40228">Learning to Deliberate: Meta-Policy Collaboration for Agentic LLMs with Multi-Agent Reinforcement Learning</a></td>
+    </tr>
+  </tbody>
+</table>
+
+#### 3.3.2 Example: Adding ROCO<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
+
+##### 3.3.2.1 Agent Model Selection
 
   - **Step 1:** Select an `AgentModelInterface` implementation. This example reuses the `VLAAdapter` configured in Section 3.1.
 
@@ -707,7 +906,7 @@ cd <ActExchanger directory in the container>/eval
     agent_model: AgentModelInterface = vla_adapter
     ```
 
-#### 3.3.2 Planner Model Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
+##### 3.3.2.2 Planner Model Interface
 
   - **Step 1:** Create a planner adapter inherited from `PlannerModelInterface`.
 
@@ -777,7 +976,7 @@ cd <ActExchanger directory in the container>/eval
     waypoints = planner_output["waypoints"]
     ```
 
-#### 3.3.3 Communication Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
+##### 3.3.2.3 Communication Interface
 
   - **Step 1:** Create a communication adapter inherited from `CommunicationInterface`.
 
@@ -849,7 +1048,7 @@ cd <ActExchanger directory in the container>/eval
     )
     ```
 
-#### 3.3.4 Continual Online RL Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
+##### 3.3.2.4 Continual Online RL Interface
 
   - **Step 1:** Implement ROCO rollout and update callbacks with the workload driver signatures.
 
@@ -887,9 +1086,44 @@ cd <ActExchanger directory in the container>/eval
     )
     ```
 
-### 3.4 VLA-based MARL Example: MAPLE<img src="./heading-divider.svg" alt="" width="100%" height="1">
+### 3.4 VLA-based MARL Integration<img src="./heading-divider.svg" alt="" width="100%" height="1">
 
-#### 3.4.1 Agent Model Selection<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
+#### 3.4.1 Implemented VLA-based MARL Methods<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
+
+<table align="center" style="text-align: center;">
+  <thead>
+    <tr>
+      <th align="center"></th>
+      <th align="center"><div align="center">Method</div></th>
+      <th align="center"><div align="center">Script</div></th>
+      <th align="center"><div align="center">Implementation Guide</div></th>
+      <th align="center"><div align="center">Open-source Link</div></th>
+      <th align="center"><div align="center">Paper</div></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center">✓</td>
+      <td align="center">MAPLE</td>
+      <td align="center"><a href="./train/marl/maple/models.py">demo</a></td>
+      <td align="center"><a href="#342-example-adding-maple">guide</a></td>
+      <td align="center">-</td>
+      <td align="center"><a href="https://arxiv.org/abs/2605.14201">MAPLE: Latent Multi-Agent Play for End-to-End Autonomous Driving</a></td>
+    </tr>
+    <tr>
+      <td align="center">✓</td>
+      <td align="center">CoMaTrack</td>
+      <td align="center"><a href="./train/marl/comatrack/base.py">demo</a></td>
+      <td align="center"><a href="./docs/implementation_guides/comatrack.md">guide</a></td>
+      <td align="center">-</td>
+      <td align="center"><a href="https://arxiv.org/abs/2603.22846">CoMaTrack: Competitive Multi-Agent Game-Theoretic Tracking with Vision-Language-Action Models</a></td>
+    </tr>
+  </tbody>
+</table>
+
+#### 3.4.2 Example: Adding MAPLE<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
+
+##### 3.4.2.1 Agent Model Selection
 
   - **Step 1:** Select an `AgentModelInterface` implementation. This example reuses the `VLAAdapter` configured in Section 3.1.
 
@@ -900,7 +1134,7 @@ cd <ActExchanger directory in the container>/eval
     agent_model: AgentModelInterface = vla_adapter
     ```
 
-#### 3.4.2 Communication Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
+##### 3.4.2.2 Communication Interface
 
   - **Step 1:** Create a communication adapter inherited from `CommunicationInterface`.
 
@@ -950,7 +1184,7 @@ cd <ActExchanger directory in the container>/eval
     )
     ```
 
-#### 3.4.3 Continual Online RL Interface<img src="./heading-divider-h4.svg" alt="" width="100%" height="1">
+##### 3.4.2.3 Continual Online RL Interface
 
   - **Step 1:** Implement MAPLE rollout and update callbacks with the workload driver signatures.
 

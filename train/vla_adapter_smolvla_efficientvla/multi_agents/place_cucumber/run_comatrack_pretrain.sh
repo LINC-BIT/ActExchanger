@@ -2,7 +2,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-INIT_AGENT_PATH="${INIT_AGENT_PATH:-ckpt/PlaceCucumber-v1/sft/panda_widowx_widowx/vla_adapter_smolvla_efficientvla_sft/20260709-054512/latest_agent.pt}" \
+INIT_AGENT_PATH="${INIT_AGENT_PATH:-ckpt/PlaceCucumber-v1/sft/panda_widowx_widowx/vla_adapter_smolvla_efficientvla_sft/20260709-054512/best_agent.pt}" \
 BACKBONE_LEARNING_RATE="${BACKBONE_LEARNING_RATE:-1e-6}" \
 HEAD_LEARNING_RATE="${HEAD_LEARNING_RATE:-1e-6}" \
 STATE_LEARNING_RATE="${STATE_LEARNING_RATE:-1e-6}" \

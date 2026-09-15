@@ -7,7 +7,7 @@ export USE_HF_MIRROR="${USE_HF_MIRROR:-1}"
 export HF_ENDPOINT="${HF_ENDPOINT:-https://hf-mirror.com}"
 PYTHON_BIN="${PYTHON_BIN:-python}"
 
-MAPPO_CKPT_PATH="${MAPPO_CKPT_PATH:-ckpt/PassObjectFiveRobots-v1/ppo/panda_so100_widowx_xarm6_inspire/mixed_five_vla_pass_object_mappo_pretrain/20260712-131713/best_agent_full.pt}"
+MAPPO_CKPT_PATH="${MAPPO_CKPT_PATH:-ckpt/PassObjectFiveRobots-v1/ppo/panda_so100_widowx_xarm6_inspire/toy_cnn_pass_object_mappo_pretrain/20260712-131713/best_agent_full.pt}"
 MODEL_BACKBONE="${MODEL_BACKBONE:-toy_cnn}"
 MODEL_DIR="${MODEL_DIR:-}"
 NUM_ENVS="${NUM_ENVS:-256}"

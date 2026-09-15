@@ -12,7 +12,7 @@ MODEL_DIR="${MODEL_DIR:-}"
 TRAJECTORY_H5_PATH="${TRAJECTORY_H5_PATH:-datasets/PassObjectFiveRobots-v1/rl/trajectory.rgb+state_dict.pd_joint_delta_pos.physx_cuda.h5}"
 DATASET_CACHE_PATH="${DATASET_CACHE_PATH:-}"
 RESUME_DIR="${RESUME_DIR:-}"
-EXPERT_AGENT_PATH="${EXPERT_AGENT_PATH:-ckpt/PassObjectFiveRobots-v1/ppo/panda_so100_widowx_xarm6_inspire/mixed_five_vla_pass_object_mappo_pretrain/20260712-131713/best_agent_full.pt}"
+EXPERT_AGENT_PATH="${EXPERT_AGENT_PATH:-ckpt/PassObjectFiveRobots-v1/ppo/panda_so100_widowx_xarm6_inspire/toy_cnn_pass_object_mappo_pretrain/20260712-131713/best_agent_full.pt}"
 
 SFT_TOTAL_ITERS="${SFT_TOTAL_ITERS:-}"
 SFT_EPOCHS="${SFT_EPOCHS:-40}"

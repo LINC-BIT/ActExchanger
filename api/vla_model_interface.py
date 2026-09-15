@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Mapping, Optional, Sequence
 
@@ -35,6 +35,17 @@ class VLAAgentSpec:
                 raise ValueError(f"state_dims[{name!r}] must be positive")
             if self.action_dims.get(name, 0) <= 0:
                 raise ValueError(f"action_dims[{name!r}] must be positive")
+
+
+@dataclass(frozen=True)
+class VLAActionOutput:
+    """Model-independent output produced by a VLA action generator."""
+
+    actions: Mapping[str, Any]
+    log_probs: Mapping[str, torch.Tensor] = field(default_factory=dict)
+    entropies: Mapping[str, torch.Tensor] = field(default_factory=dict)
+    values: Optional[torch.Tensor] = None
+    auxiliary: Mapping[str, Any] = field(default_factory=dict)
 
 
 class VLAModelInterface(AgentModelInterface, ABC):
@@ -69,6 +80,60 @@ class VLAModelInterface(AgentModelInterface, ABC):
         freeze_vla_backbone: bool,
     ) -> None:
         """Set trainability for the VLA backbone and task-specific modules."""
+
+    @abstractmethod
+    def generate_actions(
+        self,
+        policy: nn.Module,
+        batch: Mapping[str, Any],
+        *,
+        actions_input: Optional[Mapping[str, Any]] = None,
+        deterministic: bool = False,
+        return_value: bool = False,
+        generation_config: Optional[Mapping[str, Any]] = None,
+    ) -> VLAActionOutput:
+        """Generate actions through an autoregressive, diffusion, flow, or native head.
+
+        ``generation_config`` carries head-specific options such as action-chunk
+        length, diffusion steps, flow steps, temperature, or token sampling
+        settings. Implementations return those head-specific results in
+        ``VLAActionOutput.auxiliary`` while keeping the MARL-facing schema stable.
+        """
+
+    def get_action_and_value(
+        self,
+        policy: nn.Module,
+        batch: Mapping[str, Any],
+        *,
+        actions_input: Optional[Mapping[str, torch.Tensor]] = None,
+        deterministic: bool = False,
+    ):
+        """Generate actions and the policy statistics required by Online RL."""
+        output = self.generate_actions(
+            policy,
+            batch,
+            actions_input=actions_input,
+            deterministic=deterministic,
+            return_value=True,
+        )
+        if output.values is None:
+            raise ValueError("generate_actions(return_value=True) must return values")
+        return output.actions, output.log_probs, output.entropies, output.values
+
+    def get_action(
+        self,
+        policy: nn.Module,
+        batch: Mapping[str, Any],
+        *,
+        deterministic: bool = False,
+    ) -> Mapping[str, Any]:
+        """Generate environment actions without requiring critic evaluation."""
+        return self.generate_actions(
+            policy,
+            batch,
+            deterministic=deterministic,
+            return_value=False,
+        ).actions
 
     def update_state_stats(self, policy: nn.Module, obs: Any) -> None:
         """Update optional policy observation normalization statistics."""

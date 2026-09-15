@@ -8,7 +8,7 @@ export HF_ENDPOINT="${HF_ENDPOINT:-https://hf-mirror.com}"
 PYTHON_BIN="${PYTHON_BIN:-python}"
 
 ALGO="${ALGO:-mat}"
-INIT_AGENT_PATH="${INIT_AGENT_PATH:-ckpt/PassObjectFiveRobots-v1/ppo/panda_so100_widowx_xarm6_inspire/mixed_five_vla_pass_object_mappo_pretrain/20260712-131713/best_agent_full.pt}"
+INIT_AGENT_PATH="${INIT_AGENT_PATH:-ckpt/PassObjectFiveRobots-v1/ppo/panda_so100_widowx_xarm6_inspire/toy_cnn_pass_object_mappo_pretrain/20260712-131713/best_agent_full.pt}"
 NUM_ENVS="${NUM_ENVS:-128}"
 NUM_EVAL_ENVS="${NUM_EVAL_ENVS:-16}"
 EVAL_EPISODES="${EVAL_EPISODES:-20}"

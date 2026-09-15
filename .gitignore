@@ -1,5 +1,8 @@
 # Local temporary files
 /tmp/
+
+# Local and downloaded model checkpoints
+/ckpt/
 __pycache__/
 *.py[cod]
 .pytest_cache/
@@ -9,6 +12,7 @@ __pycache__/
 /scripts/update_vla_research_details.py
 /VLA调研*.xlsx
 /VLA研究*.xlsx
+/具身智能*.xlsx
 /vla_research*.xlsx
 /vla_landscape*.xlsx
 

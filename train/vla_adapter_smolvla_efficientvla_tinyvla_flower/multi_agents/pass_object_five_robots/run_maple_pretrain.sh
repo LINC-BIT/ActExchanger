@@ -2,7 +2,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-INIT_AGENT_PATH="${INIT_AGENT_PATH:-ckpt/PassObjectFiveRobots-v1/ppo/panda_so100_widowx_xarm6_inspire/mixed_five_vla_pass_object_mappo_pretrain/20260712-131713/best_agent_full.pt}" \
+INIT_AGENT_PATH="${INIT_AGENT_PATH:-ckpt/PassObjectFiveRobots-v1/ppo/panda_so100_widowx_xarm6_inspire/toy_cnn_pass_object_mappo_pretrain/20260712-131713/best_agent_full.pt}" \
 BACKBONE_LEARNING_RATE="${BACKBONE_LEARNING_RATE:-1e-6}" \
 MAPLE_HEAD_LEARNING_RATE="${MAPLE_HEAD_LEARNING_RATE:-1e-6}" \
 STATE_LEARNING_RATE="${STATE_LEARNING_RATE:-1e-6}" \

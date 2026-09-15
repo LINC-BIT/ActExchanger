@@ -25,7 +25,8 @@ from api.marl_online_rl_interface import (
     MARLOnlineRLInterface,
     run_continual_online_rl,
 )
-from api.vla_model_interface import VLAAgentSpec, VLAModelInterface
+from api.vla_model_interface import VLAActionOutput, VLAAgentSpec, VLAModelInterface
+from api.vla_model_interface_examples.vla_adapter_smolvla_impl import VLAAdapter
 
 
 NAMES = ("agent_0", "agent_1")
@@ -152,14 +153,17 @@ class _TinyVLA(VLAModelInterface):
     def build_batch_from_obs(self, obs, *, device):
         return {"obs": torch.as_tensor(obs, device=device)}
 
-    def get_action_and_value(self, policy, batch, *, actions_input=None, deterministic=False):
+    def generate_actions(
+        self, policy, batch, *, actions_input=None, deterministic=False,
+        return_value=False, generation_config=None,
+    ):
         del actions_input, deterministic
         value = policy.weight.expand(batch["obs"].shape[0])
-        return {"agent_0": value}, {}, {}, value
-
-    def get_action(self, policy, batch, *, deterministic=False):
-        del deterministic
-        return {"agent_0": policy.weight.expand(batch["obs"].shape[0])}
+        return VLAActionOutput(
+            actions={"agent_0": value},
+            values=value if return_value else None,
+            auxiliary=dict(generation_config or {}),
+        )
 
     def get_value(self, policy, batch):
         return policy.weight.expand(batch["obs"].shape[0])
@@ -192,6 +196,54 @@ def test_vla_online_rl_binding_passes_model_specific_builders():
     agent = captured["build_agent"](SimpleNamespace(), {}, device=torch.device("cpu"))
     sample = captured["sample_fn_builder"](["agent_0"], agent, torch.device("cpu"), deterministic=True)
     assert sample(torch.ones(2))["agent_0"].shape == (2,)
+
+
+def test_vla_action_generation_drives_inference_and_online_rl_outputs():
+    vla = _TinyVLA()
+    policy = vla.build_policy(device=torch.device("cpu"), config={})
+    batch = vla.build_batch_from_obs(torch.ones(2), device=torch.device("cpu"))
+
+    generated = vla.generate_actions(
+        policy,
+        batch,
+        generation_config={"action_chunk_size": 4, "diffusion_steps": 8},
+    )
+    assert generated.actions["agent_0"].shape == (2,)
+    assert generated.values is None
+    assert generated.auxiliary["action_chunk_size"] == 4
+
+    actions, log_probs, entropies, values = vla.get_action_and_value(policy, batch)
+    assert actions["agent_0"].shape == (2,)
+    assert log_probs == {}
+    assert entropies == {}
+    assert values.shape == (2,)
+
+
+def test_vla_adapter_filters_unsupported_native_generation_options():
+    class StrictNativePolicy(nn.Module):
+        def get_action(self, batch, deterministic=False):
+            return {"agent_0": batch["obs"] + float(deterministic)}
+
+        def get_action_and_value(self, batch, actions_input=None):
+            del actions_input
+            values = batch["obs"]
+            return {"agent_0": values}, {}, {}, values
+
+    vla = VLAAdapter(
+        model_dir="ckpt/unused",
+        agent_spec=VLAAgentSpec(("agent_0",), {"agent_0": 1}, {"agent_0": 1}, 1),
+        backend_module="unused.for.action.generation",
+    )
+    output = vla.generate_actions(
+        StrictNativePolicy(),
+        {"obs": torch.ones(2)},
+        deterministic=True,
+        return_value=True,
+        generation_config={"diffusion_steps": 8},
+    )
+    assert output.values.shape == (2,)
+    assert "deterministic" not in output.auxiliary["applied_generation_config"]
+    assert "diffusion_steps" not in output.auxiliary["applied_generation_config"]
 
 
 def test_vla_and_cnn_models_share_the_online_rl_interface():

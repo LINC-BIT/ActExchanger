@@ -271,12 +271,12 @@ default_hf_ckpt_paths() {
 iter_hf_ckpt_paths() {
     if [[ -n "$HF_CKPT_LIST" ]]; then
         [[ -f "$HF_CKPT_LIST" ]] || die "checkpoint list file not found: $HF_CKPT_LIST"
-        cat "$HF_CKPT_LIST"
+        sed '/^[[:space:]]*#/d; /^[[:space:]]*$/d' "$HF_CKPT_LIST"
         return
     fi
 
     if [[ -f "$ROOT_DIR/hf_ckpt_paths.txt" ]]; then
-        cat "$ROOT_DIR/hf_ckpt_paths.txt"
+        sed '/^[[:space:]]*#/d; /^[[:space:]]*$/d' "$ROOT_DIR/hf_ckpt_paths.txt"
         return
     fi
 
@@ -303,20 +303,6 @@ download_hf_checkpoints() {
     fi
     "${cmd[@]}"
 }
-
-ensure_default_state_norm_stats() {
-    local target="$ROOT_DIR/eval/ckpt/PickCube-v1/ours/octo/PickCube-v1-state-max-min.pth"
-    local source="$ROOT_DIR/eval/train/octo/ours/PickCube-v1-state-max-min.pth"
-
-    if [[ -f "$target" || ! -f "$source" ]]; then
-        return
-    fi
-
-    log "staging fallback state norm stats: $target"
-    mkdir -p "$(dirname "$target")"
-    cp "$source" "$target"
-}
-
 
 run_post_checks() {
     log "running post-install checks"
@@ -375,7 +361,6 @@ main() {
     build_filtered_requirements
     install_filtered_requirements
     download_hf_checkpoints
-    ensure_default_state_norm_stats
     run_post_checks
     print_summary
 }

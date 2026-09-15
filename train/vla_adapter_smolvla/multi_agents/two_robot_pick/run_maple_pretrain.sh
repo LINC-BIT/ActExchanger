@@ -7,7 +7,7 @@ export USE_HF_MIRROR="${USE_HF_MIRROR:-1}"
 export HF_ENDPOINT="${HF_ENDPOINT:-https://hf-mirror.com}"
 PYTHON_BIN="${PYTHON_BIN:-python}"
 
-INIT_AGENT_PATH="${INIT_AGENT_PATH:-ckpt/TwoRobotPickCube-v2/sft/pandas_pandas/vla_adapter_smolvla_sft/20260628-151306/best_agent.pt}"
+INIT_AGENT_PATH="${INIT_AGENT_PATH:-ckpt/TwoRobotPickCube-v2/sft/pandas_pandas/vla_adapter_smolvla_sft/20260628-151306/latest_agent.pt}"
 MODEL_BACKBONE="${MODEL_BACKBONE:-mixed_tiny_vla_smolvla}"
 MODEL_DIR="${MODEL_DIR:-}"
 NUM_ENVS="${NUM_ENVS:-128}"
